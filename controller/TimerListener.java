@@ -72,8 +72,10 @@ public class TimerListener implements ActionListener {
         enemyComposite.processCollision(shooter);
         
         int score;
+        int enemiesKilled;
         score = gameBoard.getScore();
-        if (enemyComposite.addScore) score += SCORE_UP;
+        enemiesKilled = enemyComposite.enemiesKilled;
+        score = enemiesKilled * SCORE_UP;
         gameBoard.setScore(score);
         gameBoard.getScoreLabel().setText("" + score);
         // System.out.println(score);

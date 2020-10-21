@@ -8,7 +8,7 @@ import view.GameBoard;
 
 public class EnemyComposite extends GameElement {
 
-    public static final int NROWS = 4;
+    public static final int NROWS = 3;
     public static final int NCOLS = 15;
     public static final int ENEMY_SIZE = 20;
     public static final int UNIT_MOVE = 5;
@@ -20,9 +20,13 @@ public class EnemyComposite extends GameElement {
     private ArrayList<GameElement> bombs;
     private boolean movingToRight = true;
     private Random random = new Random();
-    
-    public boolean addScore = false;
 
+    private int totalEnemies = NROWS*NCOLS;
+    private int enemiesAlive = 0;
+
+    public int enemiesKilled;
+    public boolean gameOver = false;
+    
     public EnemyComposite(){
         rows = new ArrayList<>();
         bombs = new ArrayList<>();
@@ -142,23 +146,28 @@ public class EnemyComposite extends GameElement {
     }
 
     public void processCollision(Shooter shooter) {
+
         // bullet vs enemies
-        addScore = false;
         var removeBullets = new ArrayList<GameElement>();
-        for (var row: rows) {
+        for (int i=0; i<rows.size(); i++) {
+            if (i == 0) enemiesAlive = 0;
+            var row = rows.get(i);
             var removeEnemies = new ArrayList<GameElement>();
-            for (var enemy: row) {
+            for (int j=0; j<row.size(); j++) {
+                var enemy = row.get(j);
                 for (var bullet: shooter.getWeapons()) {
                     if (enemy.collideWith(bullet)) {
                         removeBullets.add(bullet);
                         removeEnemies.add(enemy);
-                        addScore = true;
                     }
                 }
+                enemiesAlive++;
             }
             row.removeAll(removeEnemies);
         }
         shooter.getWeapons().removeAll(removeBullets);
+        enemiesKilled = totalEnemies-enemiesAlive;
+        if (enemiesAlive == 0) gameOver=true;
 
         // bullet vs bombs
         var removeBombs = new ArrayList<GameElement>();
@@ -174,7 +183,6 @@ public class EnemyComposite extends GameElement {
         shooter.getWeapons().removeAll(removeBullets);
         bombs.removeAll(removeBombs);
     }
-
 
     
 }

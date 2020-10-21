@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Shooter extends GameElement {
 
     public static final int UNIT_MOVE = 10;
-    public static final int MAX_BULLETS = 3;
+    public static final int MAX_BULLETS = 5;
 
     private ArrayList<GameElement> components = new ArrayList<>();
     private ArrayList<GameElement> weapons = new ArrayList<>();
@@ -57,7 +57,7 @@ public class Shooter extends GameElement {
 
     @Override
     public void render(Graphics2D g2) {
-        // TODO Auto-generated method stub
+        
         for (var c: components) {
             c.render(g2);
         }
@@ -69,7 +69,7 @@ public class Shooter extends GameElement {
 
     @Override
     public void animate() {
-        // TODO Auto-generated method stub
+
         for (var w: weapons) {
             w.animate();
         }

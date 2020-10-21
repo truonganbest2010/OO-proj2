@@ -48,12 +48,17 @@ public class GameBoard {
         canvas.setFocusable(true);
 
         JButton startBtn = new JButton("Start");
+        JButton pauseBtn = new JButton("Pause");
+            pauseBtn.setEnabled(false);
         JButton quitBtn = new JButton("Quit");
+        
         startBtn.setFocusable(false);
+        pauseBtn.setFocusable(false);
         quitBtn.setFocusable(false);
 
         JPanel southPanel = new JPanel();
         southPanel.add(startBtn);
+        southPanel.add(pauseBtn);
         southPanel.add(quitBtn);
         cp.add(BorderLayout.SOUTH, southPanel);
 
@@ -63,12 +68,26 @@ public class GameBoard {
         timer = new Timer(DELAY, timerListener);
     
         startBtn.addActionListener(e -> {
+            pauseBtn.setEnabled(true);
             shooter = new Shooter(GameBoard.WIDTH/2, GameBoard.HEIGHT-ShooterElement.SIZE);
             enemyComposite = new EnemyComposite();
             canvas.getGameElements().clear();
             canvas.getGameElements().add(shooter);
             canvas.getGameElements().add(enemyComposite);
+            score = 0;
             timer.start();
+        });
+
+        pauseBtn.addActionListener(e -> {
+            String Btnlabel = pauseBtn.getText();
+            if (Btnlabel.equals("Pause")) {
+                pauseBtn.setText("Resume");
+                timer.stop();
+            }
+            else {
+                pauseBtn.setText("Pause");
+                timer.start();
+            }
         });
 
         quitBtn.addActionListener(e -> {

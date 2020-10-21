@@ -9,7 +9,7 @@ public class Main {
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setTitle("Space Invader");
-        window.setLocation(300, 200);
+        window.setLocation(300, 100);
 
         GameBoard game = new GameBoard(window);
 
