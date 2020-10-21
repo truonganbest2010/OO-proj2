@@ -16,7 +16,7 @@ public class TimerListener implements ActionListener {
 
     private GameBoard gameBoard;
     private LinkedList<EVENT_TYPE> eventQueue;
-    private final int BOMB_DROP_FREQ = 20;
+    private final int BOMB_DROP_FREQ = 50;
     private int frameCounter = 0;
 
     public TimerListener(GameBoard gameBoard) {
@@ -26,36 +26,33 @@ public class TimerListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
         ++frameCounter;
+        // System.out.println(frameCounter);
         update();
         processEventQueue();
         processCollision();
+
+        
         gameBoard.getCanvas().repaint();
     }
 
     private void processEventQueue() {
-
         while (!eventQueue.isEmpty()) {
             var e = eventQueue.getFirst();
             eventQueue.removeFirst();
             Shooter shooter = gameBoard.getShooter();
-            if (shooter == null) 
-                return;
+            if (shooter == null) return;
             
             switch (e) {
                 case KEY_LEFT:
                     shooter.moveLeft();
-                    // System.out.println("l");
                     break;
                 case KEY_RIGHT:
                     shooter.moveRight();
-                    // System.out.println("r");
                     break;
                 case KEY_SPACE:
                     if (shooter.canFireBullets())
                         shooter.getWeapons().add(new Bullet(shooter.x, shooter.y));
-                    // System.out.println("s");
                     break;
                 }
         }
@@ -69,7 +66,6 @@ public class TimerListener implements ActionListener {
     private void processCollision() {
         var shooter = gameBoard.getShooter();
         var enemyComposite = gameBoard.getEnemyComposite();
-        
         shooter.removeBulletsOutOfBound();
         enemyComposite.removeBombsOutOfBound();
         enemyComposite.processCollision(shooter);

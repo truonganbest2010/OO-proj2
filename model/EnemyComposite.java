@@ -8,10 +8,13 @@ import view.GameBoard;
 
 public class EnemyComposite extends GameElement {
 
-    public static final int NROWS = 2;
-    public static final int NCOLS = 10;
+    public static final int NROWS = 4;
+    public static final int NCOLS = 15;
     public static final int ENEMY_SIZE = 20;
     public static final int UNIT_MOVE = 5;
+    
+    /** proj2 implementation */
+    public static final int UNIT_MOVE_DOWN = 20;
 
     private ArrayList<ArrayList<GameElement>> rows;
     private ArrayList<GameElement> bombs;
@@ -55,18 +58,31 @@ public class EnemyComposite extends GameElement {
 
     @Override
     public void animate() {
-        // TODO Auto-generated method stub
         int dx = UNIT_MOVE;
+        int dy = UNIT_MOVE_DOWN;
+
         if (movingToRight) {
             if (rightEnd() >= GameBoard.WIDTH) {
                 dx -= dx;
                 movingToRight = false;
+                // move down dy unit when hitting rightEnd
+                for (var row: rows) {
+                    for (var e: row) {
+                        e.y += dy;
+                    }
+                }
             }
         } else {
             dx = -dx;
             if (leftEnd() <= 0) {
                 dx = -dx;
                 movingToRight = true;
+                // move down dy unit when hitting leftEnd
+                for (var row: rows) {
+                    for (var e: row) {
+                        e.y += dy;
+                    }
+                }
             }
         }
 
@@ -140,7 +156,7 @@ public class EnemyComposite extends GameElement {
         }
         shooter.getWeapons().removeAll(removeBullets);
 
-        // buttet vs bombs
+        // bullet vs bombs
         var removeBombs = new ArrayList<GameElement>();
         removeBullets.clear();
 
