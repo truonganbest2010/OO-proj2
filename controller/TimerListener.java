@@ -1,11 +1,14 @@
 package controller;
 
+import java.awt.*;
 import java.awt.event.*;
 import java.util.LinkedList;
 
 import model.Bullet;
 import model.Shooter;
 import view.GameBoard;
+import view.GameOverDraw;
+import view.TextDraw;
 
 
 public class TimerListener implements ActionListener {
@@ -33,7 +36,8 @@ public class TimerListener implements ActionListener {
         update();
         processEventQueue();
         processCollision();
-
+        setScore();
+        checkGameOver();
         gameBoard.getCanvas().repaint();
     }
 
@@ -71,6 +75,12 @@ public class TimerListener implements ActionListener {
         enemyComposite.removeBombsOutOfBound();
         enemyComposite.processCollision(shooter);
         
+    }
+
+    private void setScore() {
+        var shooter = gameBoard.getShooter();
+        var enemyComposite = gameBoard.getEnemyComposite();
+        // set score
         int score;
         int enemiesKilled;
         score = gameBoard.getScore();
@@ -78,7 +88,20 @@ public class TimerListener implements ActionListener {
         score = enemiesKilled * SCORE_UP;
         gameBoard.setScore(score);
         gameBoard.getScoreLabel().setText("" + score);
-        // System.out.println(score);
+    }
+
+    private void checkGameOver() {
+        var shooter = gameBoard.getShooter();
+        var enemyComposite = gameBoard.getEnemyComposite();
+
+        if (enemyComposite.gameOver) {
+            gameBoard.getTimer().stop();
+            gameBoard.getCanvas().getGameElements().clear();
+            gameBoard.getCanvas().getGameElements().add(new GameOverDraw(0, 0, gameBoard.getCanvas().getWidth(), gameBoard.getCanvas().getHeight(), new Color(0, 200, 255, 96)));
+            gameBoard.getCanvas().getGameElements().add(new TextDraw("Your Score:", gameBoard.getCanvas().getWidth()/2 - 100, gameBoard.getCanvas().getHeight()/2 - 50, Color.red, 30));
+            gameBoard.getCanvas().getGameElements().add(new TextDraw(""+gameBoard.getScore(), gameBoard.getCanvas().getWidth()/2 - 50, gameBoard.getCanvas().getHeight()/2, Color.red, 50));
+        }
+
     }
 
     private void update() {

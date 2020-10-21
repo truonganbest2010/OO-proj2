@@ -22,8 +22,7 @@ public class EnemyComposite extends GameElement {
     private Random random = new Random();
 
     private int totalEnemies = NROWS*NCOLS;
-    private int enemiesAlive = 0;
-
+    public int enemiesAlive = 0;
     public int enemiesKilled;
     public boolean gameOver = false;
     
