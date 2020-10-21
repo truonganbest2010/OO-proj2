@@ -8,8 +8,8 @@ import view.GameBoard;
 
 public class EnemyComposite extends GameElement {
 
-    public static final int NROWS = 3;
-    public static final int NCOLS = 15;
+    public static final int NROWS = 2;
+    public static final int NCOLS = 10;
     public static final int ENEMY_SIZE = 20;
     public static final int UNIT_MOVE = 5;
     
