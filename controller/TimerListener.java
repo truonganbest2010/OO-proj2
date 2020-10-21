@@ -97,10 +97,16 @@ public class TimerListener implements ActionListener {
         if (enemyComposite.gameOver) {
             gameBoard.getTimer().stop();
             gameBoard.getCanvas().getGameElements().clear();
-            gameBoard.getCanvas().getGameElements().add(new GameOverDraw(0, 0, gameBoard.getCanvas().getWidth(), gameBoard.getCanvas().getHeight(), new Color(0, 200, 255, 96)));
-            gameBoard.getCanvas().getGameElements().add(new TextDraw("YOU WON!", gameBoard.getCanvas().getWidth()/2 - 120, gameBoard.getCanvas().getHeight()/2 - 70, Color.GREEN, 50));
-            gameBoard.getCanvas().getGameElements().add(new TextDraw("Your Score:", gameBoard.getCanvas().getWidth()/2 - 100, gameBoard.getCanvas().getHeight()/2, Color.GREEN, 30));
-            gameBoard.getCanvas().getGameElements().add(new TextDraw(""+gameBoard.getScore(), gameBoard.getCanvas().getWidth()/2 - 50, gameBoard.getCanvas().getHeight()/2 + 50, Color.GREEN, 50));
+            if (enemyComposite.enemiesAlive == 0) {
+                gameBoard.getCanvas().getGameElements().add(new GameOverDraw(0, 0, gameBoard.getCanvas().getWidth(), gameBoard.getCanvas().getHeight(), new Color(0, 255, 250, 96)));
+                gameBoard.getCanvas().getGameElements().add(new TextDraw("YOU WON!", gameBoard.getCanvas().getWidth()/2 - 120, gameBoard.getCanvas().getHeight()/2 - 70, Color.GREEN, 50));
+            }
+            if (shooter.totalComponents == 0 || enemyComposite.enemiesAlive > 0) {
+                gameBoard.getCanvas().getGameElements().add(new GameOverDraw(0, 0, gameBoard.getCanvas().getWidth(), gameBoard.getCanvas().getHeight(), new Color(255, 51, 51, 96)));
+                gameBoard.getCanvas().getGameElements().add(new TextDraw("YOU LOST!", gameBoard.getCanvas().getWidth()/2 - 120, gameBoard.getCanvas().getHeight()/2 - 70, Color.RED, 50));
+            }
+            gameBoard.getCanvas().getGameElements().add(new TextDraw("Your Score:", gameBoard.getCanvas().getWidth()/2 - 100, gameBoard.getCanvas().getHeight()/2, Color.WHITE, 30));
+            gameBoard.getCanvas().getGameElements().add(new TextDraw(""+gameBoard.getScore(), gameBoard.getCanvas().getWidth()/2 - 50, gameBoard.getCanvas().getHeight()/2 + 50, Color.WHITE, 50));
         }
 
     }

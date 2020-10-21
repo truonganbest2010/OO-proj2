@@ -11,6 +11,8 @@ public class Shooter extends GameElement {
     private ArrayList<GameElement> components = new ArrayList<>();
     private ArrayList<GameElement> weapons = new ArrayList<>();
 
+    public int totalComponents;
+
     public Shooter(int x, int y) {
         super(x, y, 0, 0);
 
@@ -23,6 +25,7 @@ public class Shooter extends GameElement {
         components.add(s2);
         components.add(s3);
         components.add(s4);
+        totalComponents = components.size();
     }
 
     public void moveLeft() {
@@ -54,10 +57,13 @@ public class Shooter extends GameElement {
     public ArrayList<GameElement> getWeapons() {
         return weapons;
     }
+    public ArrayList<GameElement> getComponents() {
+        return components;
+    }
 
     @Override
     public void render(Graphics2D g2) {
-        
+
         for (var c: components) {
             c.render(g2);
         }

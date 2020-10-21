@@ -8,8 +8,8 @@ import view.GameBoard;
 
 public class EnemyComposite extends GameElement {
 
-    public static final int NROWS = 2;
-    public static final int NCOLS = 10;
+    public static final int NROWS = 3;
+    public static final int NCOLS = 15;
     public static final int ENEMY_SIZE = 20;
     public static final int UNIT_MOVE = 5;
     
@@ -21,9 +21,12 @@ public class EnemyComposite extends GameElement {
     private boolean movingToRight = true;
     private Random random = new Random();
 
+    private int bottomRow = NROWS;
     private int totalEnemies = NROWS*NCOLS;
     public int enemiesAlive = 0;
     public int enemiesKilled;
+
+
     public boolean gameOver = false;
     
     public EnemyComposite(){
@@ -74,6 +77,7 @@ public class EnemyComposite extends GameElement {
                 for (var row: rows) {
                     for (var e: row) {
                         e.y += dy;
+                        checkReachBottom();
                     }
                 }
             }
@@ -86,6 +90,7 @@ public class EnemyComposite extends GameElement {
                 for (var row: rows) {
                     for (var e: row) {
                         e.y += dy;
+                        checkReachBottom();
                     }
                 }
             }
@@ -122,6 +127,22 @@ public class EnemyComposite extends GameElement {
             if (x < xEnd) xEnd=x;
         }
         return xEnd;
+    }
+
+    private void checkReachBottom() {
+        for (int i=0; i<bottomRow; i++) {
+            var row = rows.get(i);
+            if (row.size() == 0) {
+                bottomRow--;
+            }
+            for (var e: row) {
+                if (e.y >= GameBoard.HEIGHT-ENEMY_SIZE) {
+                    gameOver = true;
+                }
+            }
+        }
+        
+        
     }
 
     public void dropBombs() {
@@ -181,6 +202,24 @@ public class EnemyComposite extends GameElement {
         }
         shooter.getWeapons().removeAll(removeBullets);
         bombs.removeAll(removeBombs);
+
+        // bombs vs components
+        var removeComponents = new ArrayList<GameElement>();
+        for (int i=0; i<shooter.getComponents().size(); i++) {
+            
+            var component = shooter.getComponents().get(i);
+            for (var b: bombs) {
+                if (b.collideWith(component)) {
+                    removeBombs.add(b);
+                    removeComponents.add(component);
+                    shooter.totalComponents--;
+                }
+            }
+        }
+        shooter.getComponents().removeAll(removeComponents);
+        bombs.removeAll(removeBombs);
+        if (shooter.totalComponents == 0) gameOver=true;
+
     }
 
     

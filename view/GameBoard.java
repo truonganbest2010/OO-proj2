@@ -14,7 +14,7 @@ public class GameBoard {
 
     public static final int WIDTH = 800;
     public static final int HEIGHT = 800;
-    public static final int FPS = 50;
+    public static final int FPS = 60;
     public static final int DELAY = 1000/FPS;
     
     private JFrame window;
@@ -62,7 +62,7 @@ public class GameBoard {
         southPanel.add(quitBtn);
         cp.add(BorderLayout.SOUTH, southPanel);
 
-        canvas.getGameElements().add(new TextDraw("Click <Start> to play", WIDTH/3, HEIGHT/2, Color.yellow, 30));
+        canvas.getGameElements().add(new TextDraw("Click <Start> to play", WIDTH/3 - 50, HEIGHT/2, Color.yellow, 30));
         
         timerListener = new TimerListener(this);
         timer = new Timer(DELAY, timerListener);
