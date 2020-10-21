@@ -13,7 +13,7 @@ import javax.swing.*;
 public class GameBoard {
 
     public static final int WIDTH = 800;
-    public static final int HEIGHT = 600;
+    public static final int HEIGHT = 800;
     public static final int FPS = 30;
     public static final int DELAY = 1000/FPS;
     
@@ -24,13 +24,22 @@ public class GameBoard {
     private Timer timer;
     private TimerListener timerListener;
 
+    private JLabel scoreLabel = new JLabel();
+    private int score = 0;
+
     public GameBoard(JFrame window) {
         this.window = window;
-
     }
 
     public void init() {
         Container cp = window.getContentPane();
+
+        JPanel northPanel = new JPanel();
+        cp.add(BorderLayout.NORTH, northPanel);
+        JLabel label = new JLabel("Score: ");
+        scoreLabel.setText("" + score);
+        northPanel.add(label);
+        northPanel.add(scoreLabel);
 
         canvas = new MyCanvas(this, WIDTH, HEIGHT);
         cp.add(BorderLayout.CENTER, canvas);
@@ -81,5 +90,14 @@ public class GameBoard {
     }
     public EnemyComposite getEnemyComposite() {
         return enemyComposite;
+    }
+    public void setScore(int score) {
+        this.score = score;
+    }
+    public int getScore() {
+        return score;
+    }
+    public JLabel getScoreLabel() {
+        return scoreLabel;
     }
 }

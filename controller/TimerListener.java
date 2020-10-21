@@ -10,6 +10,8 @@ import view.GameBoard;
 
 public class TimerListener implements ActionListener {
 
+    private static final int SCORE_UP = 10;
+
     public enum EVENT_TYPE {
         KEY_RIGHT, KEY_LEFT, KEY_SPACE
     }
@@ -32,7 +34,6 @@ public class TimerListener implements ActionListener {
         processEventQueue();
         processCollision();
 
-        
         gameBoard.getCanvas().repaint();
     }
 
@@ -69,6 +70,13 @@ public class TimerListener implements ActionListener {
         shooter.removeBulletsOutOfBound();
         enemyComposite.removeBombsOutOfBound();
         enemyComposite.processCollision(shooter);
+        
+        int score;
+        score = gameBoard.getScore();
+        if (enemyComposite.addScore) score += SCORE_UP;
+        gameBoard.setScore(score);
+        gameBoard.getScoreLabel().setText("" + score);
+        // System.out.println(score);
     }
 
     private void update() {

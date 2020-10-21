@@ -20,6 +20,8 @@ public class EnemyComposite extends GameElement {
     private ArrayList<GameElement> bombs;
     private boolean movingToRight = true;
     private Random random = new Random();
+    
+    public boolean addScore = false;
 
     public EnemyComposite(){
         rows = new ArrayList<>();
@@ -141,6 +143,7 @@ public class EnemyComposite extends GameElement {
 
     public void processCollision(Shooter shooter) {
         // bullet vs enemies
+        addScore = false;
         var removeBullets = new ArrayList<GameElement>();
         for (var row: rows) {
             var removeEnemies = new ArrayList<GameElement>();
@@ -149,6 +152,7 @@ public class EnemyComposite extends GameElement {
                     if (enemy.collideWith(bullet)) {
                         removeBullets.add(bullet);
                         removeEnemies.add(enemy);
+                        addScore = true;
                     }
                 }
             }
@@ -159,7 +163,6 @@ public class EnemyComposite extends GameElement {
         // bullet vs bombs
         var removeBombs = new ArrayList<GameElement>();
         removeBullets.clear();
-
         for (var b: bombs) {
             for (var bullet: shooter.getWeapons()) {
                 if (b.collideWith(bullet)) {
@@ -171,5 +174,7 @@ public class EnemyComposite extends GameElement {
         shooter.getWeapons().removeAll(removeBullets);
         bombs.removeAll(removeBombs);
     }
+
+
     
 }
