@@ -8,10 +8,10 @@ import view.GameBoard;
 
 public class EnemyComposite extends GameElement {
 
-    public static final int NROWS = 3;
+    public static final int NROWS = 4;
     public static final int NCOLS = 15;
     public static final int ENEMY_SIZE = 20;
-    public static final int UNIT_MOVE = 5;
+    public static final int UNIT_MOVE = 3;
     
     /** proj2 implementation */
     public static final int UNIT_MOVE_DOWN = 20;
@@ -21,10 +21,9 @@ public class EnemyComposite extends GameElement {
     private boolean movingToRight = true;
     private Random random = new Random();
 
-    private int bottomRow = NROWS;
     private int totalEnemies = NROWS*NCOLS;
     public int enemiesAlive = 0;
-    public int enemiesKilled;
+    public int enemiesKilled = 0;
 
 
     public boolean gameOver = false;
@@ -62,6 +61,10 @@ public class EnemyComposite extends GameElement {
         for (var b: bombs) {
             b.render(g2);
         }
+
+        g2.setColor(Color.white);
+        g2.setFont(new Font("Courier", Font.BOLD, 30));
+        g2.drawString(""+enemiesKilled*10, 20, y+40);
     }
 
     @Override
@@ -77,7 +80,6 @@ public class EnemyComposite extends GameElement {
                 for (var row: rows) {
                     for (var e: row) {
                         e.y += dy;
-                        checkReachBottom();
                     }
                 }
             }
@@ -90,7 +92,6 @@ public class EnemyComposite extends GameElement {
                 for (var row: rows) {
                     for (var e: row) {
                         e.y += dy;
-                        checkReachBottom();
                     }
                 }
             }
@@ -128,22 +129,8 @@ public class EnemyComposite extends GameElement {
         }
         return xEnd;
     }
-
-    private void checkReachBottom() {
-        for (int i=0; i<bottomRow; i++) {
-            var row = rows.get(i);
-            if (row.size() == 0) {
-                bottomRow--;
-            }
-            for (var e: row) {
-                if (e.y >= GameBoard.HEIGHT-ENEMY_SIZE) {
-                    gameOver = true;
-                }
-            }
-        }
         
         
-    }
 
     public void dropBombs() {
         for (var row: rows) {
@@ -182,6 +169,11 @@ public class EnemyComposite extends GameElement {
                     }
                 }
                 enemiesAlive++;
+
+                // check if enemies reach bottom line
+                if (enemy.collideWith(shooter.getBottomLine().get(0))) {
+                    gameOver = true;
+                }
             }
             row.removeAll(removeEnemies);
         }
@@ -219,6 +211,7 @@ public class EnemyComposite extends GameElement {
         shooter.getComponents().removeAll(removeComponents);
         bombs.removeAll(removeBombs);
         if (shooter.totalComponents == 0) gameOver=true;
+
 
     }
 

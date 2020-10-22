@@ -13,7 +13,7 @@ import javax.swing.*;
 public class GameBoard {
 
     public static final int WIDTH = 800;
-    public static final int HEIGHT = 800;
+    public static final int HEIGHT = 600;
     public static final int FPS = 60;
     public static final int DELAY = 1000/FPS;
     
@@ -23,6 +23,10 @@ public class GameBoard {
     private EnemyComposite enemyComposite;
     private Timer timer;
     private TimerListener timerListener;
+
+    private JButton startBtn = new JButton("Start");
+    private JButton pauseBtn = new JButton("Pause");
+    private JButton quitBtn = new JButton("Quit");
 
     private JLabel scoreLabel = new JLabel();
     private int score = 0;
@@ -47,11 +51,8 @@ public class GameBoard {
         canvas.requestFocusInWindow();
         canvas.setFocusable(true);
 
-        JButton startBtn = new JButton("Start");
-        JButton pauseBtn = new JButton("Pause");
             pauseBtn.setEnabled(false);
-        JButton quitBtn = new JButton("Quit");
-        
+
         startBtn.setFocusable(false);
         pauseBtn.setFocusable(false);
         quitBtn.setFocusable(false);
@@ -69,6 +70,7 @@ public class GameBoard {
     
         startBtn.addActionListener(e -> {
             pauseBtn.setEnabled(true);
+            startBtn.setEnabled(false);
             shooter = new Shooter(GameBoard.WIDTH/2, GameBoard.HEIGHT-ShooterElement.SIZE);
             enemyComposite = new EnemyComposite();
             canvas.getGameElements().clear();
@@ -82,10 +84,13 @@ public class GameBoard {
             String Btnlabel = pauseBtn.getText();
             if (Btnlabel.equals("Pause")) {
                 pauseBtn.setText("Resume");
+                startBtn.setEnabled(true);
+                startBtn.setText("New Game");
                 timer.stop();
             }
             else {
                 pauseBtn.setText("Pause");
+                startBtn.setEnabled(false);
                 timer.start();
             }
         });
@@ -118,5 +123,11 @@ public class GameBoard {
     }
     public JLabel getScoreLabel() {
         return scoreLabel;
+    }
+    public JButton getStartBtn() {
+        return startBtn;
+    }
+    public JButton getPauseBtn() {
+        return pauseBtn;
     }
 }

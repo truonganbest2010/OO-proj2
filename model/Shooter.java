@@ -3,6 +3,8 @@ package model;
 import java.awt.*;
 import java.util.ArrayList;
 
+import view.GameBoard;
+
 public class Shooter extends GameElement {
 
     public static final int UNIT_MOVE = 10;
@@ -10,6 +12,7 @@ public class Shooter extends GameElement {
 
     private ArrayList<GameElement> components = new ArrayList<>();
     private ArrayList<GameElement> weapons = new ArrayList<>();
+    private ArrayList<GameElement> bottomLine = new ArrayList<>();
 
     public int totalComponents;
 
@@ -26,6 +29,8 @@ public class Shooter extends GameElement {
         components.add(s3);
         components.add(s4);
         totalComponents = components.size();
+
+        bottomLine.add(new BottomLine(0, GameBoard.HEIGHT-EnemyComposite.ENEMY_SIZE/2, GameBoard.WIDTH, EnemyComposite.ENEMY_SIZE/2));
     }
 
     public void moveLeft() {
@@ -60,6 +65,9 @@ public class Shooter extends GameElement {
     public ArrayList<GameElement> getComponents() {
         return components;
     }
+    public ArrayList<GameElement> getBottomLine() {
+        return bottomLine;
+    }
 
     @Override
     public void render(Graphics2D g2) {
@@ -70,6 +78,7 @@ public class Shooter extends GameElement {
         for (var w: weapons) {
             w.render(g2);
         }
+
     }
 
 

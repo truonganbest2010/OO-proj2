@@ -42,12 +42,13 @@ public class TimerListener implements ActionListener {
     }
 
     private void processEventQueue() {
+
         while (!eventQueue.isEmpty()) {
             var e = eventQueue.getFirst();
             eventQueue.removeFirst();
             Shooter shooter = gameBoard.getShooter();
             if (shooter == null) return;
-            
+            System.out.println(e);
             switch (e) {
                 case KEY_LEFT:
                     shooter.moveLeft();
@@ -78,7 +79,6 @@ public class TimerListener implements ActionListener {
     }
 
     private void setScore() {
-        var shooter = gameBoard.getShooter();
         var enemyComposite = gameBoard.getEnemyComposite();
         // set score
         int score;
@@ -107,6 +107,10 @@ public class TimerListener implements ActionListener {
             }
             gameBoard.getCanvas().getGameElements().add(new TextDraw("Your Score:", gameBoard.getCanvas().getWidth()/2 - 100, gameBoard.getCanvas().getHeight()/2, Color.WHITE, 30));
             gameBoard.getCanvas().getGameElements().add(new TextDraw(""+gameBoard.getScore(), gameBoard.getCanvas().getWidth()/2 - 50, gameBoard.getCanvas().getHeight()/2 + 50, Color.WHITE, 50));
+        
+            gameBoard.getStartBtn().setText("New Game");
+            gameBoard.getPauseBtn().setEnabled(false);
+            gameBoard.getStartBtn().setEnabled(true);
         }
 
     }
