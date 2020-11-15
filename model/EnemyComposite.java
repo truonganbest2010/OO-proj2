@@ -31,10 +31,7 @@ public class EnemyComposite extends GameElement implements Subject {
     private Random random = new Random();
 
     private int totalEnemies = NROWS * NCOLS;
-    public int enemiesAlive = 0;
     public int enemiesKilled = 0;
-
-    public int eKilled;
 
     public EnemyComposite() {
         rows = new ArrayList<>();
@@ -166,8 +163,7 @@ public class EnemyComposite extends GameElement implements Subject {
                     if (enemy.collideWith(bullet)) {
                         removeBullets.add(bullet);
                         removeEnemies.add(enemy);
-                        eKilled = removeEnemies.size();
-                        enemiesKilled+= eKilled;
+                        enemiesKilled+= removeEnemies.size();
                         notifyObservers(EVENT.HIT_BULLET);
                     }
                 }
