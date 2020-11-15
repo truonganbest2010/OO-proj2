@@ -10,6 +10,8 @@ public class Shooter extends GameElement {
     public static final int UNIT_MOVE = 10;
     public static final int MAX_BULLETS = 5;
 
+    private int laserCount = 10;
+
     private ArrayList<GameElement> components = new ArrayList<>();
     private ArrayList<GameElement> weapons = new ArrayList<>();
     private ArrayList<GameElement> bottomLine = new ArrayList<>();
@@ -51,6 +53,20 @@ public class Shooter extends GameElement {
         return weapons.size() < MAX_BULLETS;
     }
 
+    public boolean canFireLaser() {
+        return laserCount > 0 && weapons.size() < 1;
+    }
+
+    public int getLaserCount() {
+        return laserCount;
+    }
+
+    public void setLaserCount(int laserCount) {
+        this.laserCount = laserCount;
+    }
+
+    
+
     public void removeBulletsOutOfBound() {
         var remove = new ArrayList<GameElement>();
         for (var w: weapons) {
@@ -80,7 +96,6 @@ public class Shooter extends GameElement {
         }
 
     }
-
 
     @Override
     public void animate() {

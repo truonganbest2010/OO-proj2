@@ -6,6 +6,7 @@ import controller.TimerListener;
 import model.EnemyComposite;
 import model.Shooter;
 import model.ShooterElement;
+import model.observerPattern.EnemyObserver;
 
 import java.awt.*;
 import javax.swing.*;
@@ -13,8 +14,8 @@ import javax.swing.*;
 public class GameBoard {
 
     public static final int WIDTH = 800;
-    public static final int HEIGHT = 600;
-    public static final int FPS = 60;
+    public static final int HEIGHT = 400;
+    public static final int FPS = 40;
     public static final int DELAY = 1000/FPS;
     
     private JFrame window;
@@ -28,8 +29,8 @@ public class GameBoard {
     private JButton pauseBtn = new JButton("Pause");
     private JButton quitBtn = new JButton("Quit");
 
-    private JLabel scoreLabel = new JLabel();
     private int score = 0;
+    private boolean gameOver;
 
     public GameBoard(JFrame window) {
         this.window = window;
@@ -38,12 +39,6 @@ public class GameBoard {
     public void init() {
         Container cp = window.getContentPane();
 
-        JPanel northPanel = new JPanel();
-        cp.add(BorderLayout.NORTH, northPanel);
-        JLabel label = new JLabel("Score: ");
-        scoreLabel.setText("" + score);
-        northPanel.add(label);
-        northPanel.add(scoreLabel);
 
         canvas = new MyCanvas(this, WIDTH, HEIGHT);
         cp.add(BorderLayout.CENTER, canvas);
@@ -69,6 +64,7 @@ public class GameBoard {
         timer = new Timer(DELAY, timerListener);
     
         startBtn.addActionListener(e -> {
+            gameOver = false;
             pauseBtn.setEnabled(true);
             startBtn.setEnabled(false);
             shooter = new Shooter(GameBoard.WIDTH/2, GameBoard.HEIGHT-ShooterElement.SIZE);
@@ -78,6 +74,9 @@ public class GameBoard {
             canvas.getGameElements().add(enemyComposite);
             score = 0;
             timer.start();
+
+            EnemyObserver observer = new EnemyObserver(this);
+            enemyComposite.addEnemyListener(observer);
         });
 
         pauseBtn.addActionListener(e -> {
@@ -98,6 +97,8 @@ public class GameBoard {
         quitBtn.addActionListener(e -> {
             System.exit(0);
         });
+
+        
     }
 
     public MyCanvas getCanvas() {
@@ -121,13 +122,16 @@ public class GameBoard {
     public int getScore() {
         return score;
     }
-    public JLabel getScoreLabel() {
-        return scoreLabel;
-    }
     public JButton getStartBtn() {
         return startBtn;
     }
     public JButton getPauseBtn() {
         return pauseBtn;
+    }
+    public boolean isGameOver() {
+        return gameOver;
+    }
+    public void setGameOver(boolean gameOver) {
+        this.gameOver = gameOver;
     }
 }

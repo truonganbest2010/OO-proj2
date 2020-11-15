@@ -26,6 +26,8 @@ public class KeyController implements KeyListener {
             case KeyEvent.VK_SPACE:
                 gameBoard.getTimerListener().getEventQueue().add(TimerListener.EVENT_TYPE.KEY_SPACE);
                 break;
+            case KeyEvent.VK_L:
+                gameBoard.getTimerListener().getEventQueue().add(TimerListener.EVENT_TYPE.KEY_L);
         }
 
     }

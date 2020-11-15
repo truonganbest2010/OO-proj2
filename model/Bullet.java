@@ -25,8 +25,7 @@ public class Bullet extends GameElement {
     }
 
     @Override
-    public void animate() {
-        
+    public void animate() {    
         super.y -= UNIT_MOVE;
     }
     
