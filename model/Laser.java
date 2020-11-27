@@ -11,7 +11,7 @@ import view.GameBoard;
 
 public class Laser extends GameElement {
 
-    public static final int WIDTH = 3;
+    public static final int WIDTH = 1;
     public static final int UNIT_MOVE = 1;
 
     private LaserFireStrategy fireStrategy;
