@@ -7,6 +7,7 @@ import java.util.Random;
 import controller.TimerListener;
 import model.observerPattern.Observer;
 import model.observerPattern.Subject;
+import model.laserStrategyPattern.*;
 import view.GameBoard;
 
 public class EnemyComposite extends GameElement implements Subject {
@@ -17,13 +18,14 @@ public class EnemyComposite extends GameElement implements Subject {
     public static final int UNIT_MOVE = 3;
 
     public enum EVENT {
-        HIT_BULLET, REACH_BOTTOM, ALL_E_DESTROYED, ALL_C_DESTROYED
+        GOT_SHOT, REACH_BOTTOM, ALL_E_DESTROYED, ALL_C_DESTROYED
     }
 
     /** proj2 implementation */
     public static final int UNIT_MOVE_DOWN = 20;
 
     private ArrayList<Observer> observers = new ArrayList<>();
+
 
     private ArrayList<ArrayList<GameElement>> rows;
     private ArrayList<GameElement> bombs;
@@ -44,7 +46,9 @@ public class EnemyComposite extends GameElement implements Subject {
                 oneRow.add(new Enemy(c * ENEMY_SIZE * 2, r * ENEMY_SIZE * 2, ENEMY_SIZE, Color.yellow, true));
             }
         }
+
     }
+
 
     @Override
     public void render(Graphics2D g2) {
@@ -164,7 +168,17 @@ public class EnemyComposite extends GameElement implements Subject {
                         removeBullets.add(bullet);
                         removeEnemies.add(enemy);
                         enemiesKilled+= removeEnemies.size();
-                        notifyObservers(EVENT.HIT_BULLET);
+                        notifyObservers(EVENT.GOT_SHOT);
+                    }
+                }
+
+                for (var laser: shooter.getLaserGun()) {
+                    if (enemy.collideWith(laser)) {
+                        removeEnemies.add(enemy);
+                        enemiesKilled+= removeEnemies.size();
+                        notifyObservers(EVENT.GOT_SHOT);
+                        laser.setFireStrategy(new LaserFireAtEnemy(laser));
+                        laser.setRenderStrategy(new LaserRenderFireAtEnemy(laser));
                     }
                 }
 
@@ -176,6 +190,7 @@ public class EnemyComposite extends GameElement implements Subject {
             row.removeAll(removeEnemies);
         }
         shooter.getWeapons().removeAll(removeBullets);
+
 
         if (enemiesKilled == totalEnemies) {
             notifyObservers(EVENT.ALL_E_DESTROYED);
@@ -225,6 +240,8 @@ public class EnemyComposite extends GameElement implements Subject {
         }
         shooter.getComponents().removeAll(removeComponents);
 
+        // System.out.println(observers.size());
+
     }
 
     @Override
@@ -243,24 +260,24 @@ public class EnemyComposite extends GameElement implements Subject {
     public void notifyObservers(EVENT event) {
         // TODO Auto-generated method stub
         switch (event) {
-            case HIT_BULLET:
+            case GOT_SHOT:
                 for (var o: observers) {
-                    o.enemyHitBullet();
+                    o.enemiesGotShot();
                 }
                 break;
             case REACH_BOTTOM:
                 for (var o: observers) {
-                    o.enemyReachBottom();
+                    o.enemiesReachBottom();
                 }
                 break;
             case ALL_E_DESTROYED:
                 for (var o: observers) {
-                    o.enemyAllDestroyed();
+                    o.enemiesAllGone();
                 }
                 break;
             case ALL_C_DESTROYED:
                 for (var o: observers) {
-                    o.allComponentsDestroyed();
+                    o.enemiesDestroyedComponents();
                 }
         }
 

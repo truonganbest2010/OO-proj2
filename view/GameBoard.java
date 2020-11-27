@@ -1,6 +1,5 @@
 package view;
 
-
 import controller.KeyController;
 import controller.TimerListener;
 import model.EnemyComposite;
@@ -14,7 +13,7 @@ import javax.swing.*;
 public class GameBoard {
 
     public static final int WIDTH = 800;
-    public static final int HEIGHT = 400;
+    public static final int HEIGHT = 600;
     public static final int FPS = 40;
     public static final int DELAY = 1000/FPS;
     
@@ -73,6 +72,7 @@ public class GameBoard {
             canvas.getGameElements().add(shooter);
             canvas.getGameElements().add(enemyComposite);
             score = 0;
+            timerListener.getEventQueue().clear();
             timer.start();
 
             EnemyObserver observer = new EnemyObserver(this);
@@ -134,4 +134,5 @@ public class GameBoard {
     public void setGameOver(boolean gameOver) {
         this.gameOver = gameOver;
     }
+    
 }

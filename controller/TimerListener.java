@@ -9,6 +9,8 @@ import model.*;
 import model.Shooter;
 import view.GameBoard;
 
+import model.laserStrategyPattern.*;
+
 
 public class TimerListener implements ActionListener {
 
@@ -70,7 +72,10 @@ public class TimerListener implements ActionListener {
                 case KEY_L:
                     if (shooter.canFireLaser()) {
                         // shooter.setLaserCount(shooter.getLaserCount()-1);
-                        shooter.getWeapons().add(new Laser(shooter.x, 1));
+                        Laser laser = new Laser(shooter.x, 1);
+                        shooter.getLaserGun().add(laser);
+                        laser.setFireStrategy(new LaserFireIntoSpace(laser));
+                        laser.setRenderStrategy(new LaserRenderFireIntoSpace(laser));
                     }
                     break;
                 }
@@ -85,7 +90,7 @@ public class TimerListener implements ActionListener {
     private void processCollision() {
         var shooter = gameBoard.getShooter();
         var enemyComposite = gameBoard.getEnemyComposite();
-        shooter.removeBulletsOutOfBound();
+        shooter.removeOutOfBound();
         enemyComposite.removeBombsOutOfBound();
         enemyComposite.processCollision(shooter);
         
@@ -101,5 +106,5 @@ public class TimerListener implements ActionListener {
     public LinkedList<EVENT_TYPE> getEventQueue() {
         return eventQueue;
     }
-    
+
 }

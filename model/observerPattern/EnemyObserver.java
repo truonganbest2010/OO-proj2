@@ -17,7 +17,7 @@ public class EnemyObserver implements Observer {
 
 
     @Override
-    public void enemyHitBullet() {
+    public void enemiesGotShot() {
         // TODO Auto-generated method stub
         var enemyComposite = gameBoard.getEnemyComposite();
         // set score
@@ -29,7 +29,7 @@ public class EnemyObserver implements Observer {
     }
 
     @Override
-    public void enemyReachBottom() {
+    public void enemiesReachBottom() {
         // TODO Auto-generated method stub
         gameBoard.setGameOver(true);
         gameBoard.getCanvas().getGameElements().clear();
@@ -39,7 +39,7 @@ public class EnemyObserver implements Observer {
     }
 
     @Override
-    public void enemyAllDestroyed() {
+    public void enemiesAllGone() {
         // TODO Auto-generated method stub
         gameBoard.setGameOver(true);
         gameBoard.getCanvas().getGameElements().clear();
@@ -49,7 +49,7 @@ public class EnemyObserver implements Observer {
     }
 
     @Override
-    public void allComponentsDestroyed() {
+    public void enemiesDestroyedComponents() {
         // TODO Auto-generated method stub
         gameBoard.setGameOver(true);
         gameBoard.getCanvas().getGameElements().clear();

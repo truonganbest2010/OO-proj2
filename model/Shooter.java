@@ -14,6 +14,7 @@ public class Shooter extends GameElement {
 
     private ArrayList<GameElement> components = new ArrayList<>();
     private ArrayList<GameElement> weapons = new ArrayList<>();
+    private ArrayList<Laser> laserGun = new ArrayList<>();
     private ArrayList<GameElement> bottomLine = new ArrayList<>();
 
     public int totalComponents;
@@ -54,7 +55,7 @@ public class Shooter extends GameElement {
     }
 
     public boolean canFireLaser() {
-        return laserCount > 0 && weapons.size() < 1;
+        return laserCount > 0 && laserGun.size() < 1;
     }
 
     public int getLaserCount() {
@@ -67,16 +68,24 @@ public class Shooter extends GameElement {
 
     
 
-    public void removeBulletsOutOfBound() {
+    public void removeOutOfBound() {
         var remove = new ArrayList<GameElement>();
         for (var w: weapons) {
             if (w.y < 0) remove.add(w);
         }
         weapons.removeAll(remove);
+
+        for (var lg: laserGun) {
+            if (lg.y < 0) remove.add(lg);
+        }
+        laserGun.removeAll(remove);
     }
 
     public ArrayList<GameElement> getWeapons() {
         return weapons;
+    }
+    public ArrayList<Laser> getLaserGun() {
+        return laserGun;
     }
     public ArrayList<GameElement> getComponents() {
         return components;
@@ -94,6 +103,9 @@ public class Shooter extends GameElement {
         for (var w: weapons) {
             w.render(g2);
         }
+        for (var lg: laserGun) {
+            lg.render(g2);
+        }
 
     }
 
@@ -103,6 +115,10 @@ public class Shooter extends GameElement {
         for (var w: weapons) {
             w.animate();
         }
+        for  (var lg: laserGun) {
+            lg.animate();
+        }
+
     }
     
 }
