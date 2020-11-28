@@ -15,9 +15,9 @@ import view.GameBoard;
 public class EnemyComposite extends GameElement implements Subject {
 
     public static final int NROWS = 5;
-    public static final int NCOLS = 15;
-    public static final int ENEMY_SIZE = 20;
-    public static final int UNIT_MOVE = 3;
+    public static final int NCOLS = 12;
+    public static final int ENEMY_SIZE = 25;
+    public static final int UNIT_MOVE = 2;
 
     public enum EVENT {
         GOT_SHOT, REACH_BOTTOM, ALL_E_DESTROYED, ALL_C_DESTROYED
@@ -31,7 +31,7 @@ public class EnemyComposite extends GameElement implements Subject {
 
     private ArrayList<ArrayList<GameElement>> rows;
     private ArrayList<GameElement> bombs;
-    private boolean movingToRight = true;
+    public boolean movingToRight;
     private Random random = new Random();
 
     
@@ -48,7 +48,16 @@ public class EnemyComposite extends GameElement implements Subject {
             rows.add(oneRow);
             for (int c = 0; c < NCOLS; c++) {
                 Enemy enemy = new Enemy(c * ENEMY_SIZE * 2, r * ENEMY_SIZE * 2, ENEMY_SIZE, Color.yellow, true);
-                enemy.setImage(ImageStore.enemy);
+                if (r%2 == 0) {
+                    if (c%2 == 0) {
+                        enemy.setImage(ImageStore.enemy_white);
+                    } else enemy.setImage(ImageStore.enemy_yellow);
+                } else {
+                    if (c%2 != 0) {
+                        enemy.setImage(ImageStore.enemy_white);
+                    } else enemy.setImage(ImageStore.enemy_yellow);
+                }
+
                 oneRow.add(enemy);
             }
         }
@@ -175,8 +184,11 @@ public class EnemyComposite extends GameElement implements Subject {
                         enemiesKilled+= removeEnemies.size();
                         notifyObservers(EVENT.GOT_SHOT);
                         
-                        bullet.setImage(ImageStore.explode);
-                        bullet.setMoveStrategy(new BulletHitEnemyStrategy(bullet));
+                        // bullet.setImage(ImageStore.explode);
+                        BulletHitEnemyStrategy bhes = new BulletHitEnemyStrategy(bullet);
+                        bhes.setMoveRight(movingToRight);
+                        bullet.setMoveStrategy(bhes);
+
                         bullet.setRenderStrategy(new BulletRenderHitEnemyStrategy(bullet));
                     }
                 }

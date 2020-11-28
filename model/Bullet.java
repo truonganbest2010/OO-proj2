@@ -9,13 +9,13 @@ import model.bulletStrategyPattern.BulletRenderStrategy;
 
 public class Bullet extends GameElement {
 
-    public static final int WIDTH = 5;
+    public static final int WIDTH = 7;
     public static final int UNIT_MOVE = 10;
     private BulletMoveStrategy moveStrategy;
     private BulletRenderStrategy renderStrategy;
 
     public Bullet(int x, int y) {
-        super(x, y, Color.red, true, WIDTH, WIDTH*3);
+        super(x, y, Color.red, true, WIDTH, WIDTH);
 
         moveStrategy = new BulletMoveForwardStrategy(this);
         renderStrategy = new BulletRenderMoveForwardStrategy(this);

@@ -25,13 +25,13 @@ public class Shooter extends GameElement {
 
         var size = ShooterElement.SIZE;
         var s1 = new ShooterElement(x-size, y-size, Color.white, false);
-         s1.setImage(ImageStore.shooterComponent1);
+         s1.setImage(ImageStore.sc1);
         var s2 = new ShooterElement(x, y-size, Color.white, false);
-         s2.setImage(ImageStore.shooterComponent2);
+         s2.setImage(ImageStore.sc2);
         var s3 = new ShooterElement(x-size, y, Color.white, false);
-         s3.setImage(ImageStore.shooterComponent3);
+         s3.setImage(ImageStore.sc3);
         var s4 = new ShooterElement(x, y, Color.white, false);
-         s4.setImage(ImageStore.shooterComponent4);
+         s4.setImage(ImageStore.sc4);
         components.add(s1);
         components.add(s2);
         components.add(s3);

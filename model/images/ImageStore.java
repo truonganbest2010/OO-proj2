@@ -5,32 +5,45 @@ import java.awt.*;
 import java.io.File;
 import javax.imageio.ImageIO;
 
+import model.Bomb;
+import model.Bullet;
+import model.EnemyComposite;
 import model.ShooterElement;
 import view.GameBoard;
 
 public class ImageStore {
     
-    public static BufferedImage enemy;
-    public static BufferedImage shooterComponent1, shooterComponent2, shooterComponent3, shooterComponent4;
-    public static BufferedImage bullet, explode;
+    public static BufferedImage enemy_white, enemy_yellow;
+    public static BufferedImage sc1, sc2, sc3, sc4;
+    public static BufferedImage explode, e1, e2, e3, e4, e5;
+    public static BufferedImage bullet;
     public static BufferedImage bomb;
-    public static BufferedImage lightning;
-    public static BufferedImage lightning_icon;
+    public static BufferedImage lightning, lightning_icon;
 
 
 
     static {
-        enemy = readImage("model/images/enemy.png", 20, 20);
-        bullet = readImage("model/images/bullet.png", 7, 7);
-        explode = readImage("model/images/explode.png", 20, 20);
+        enemy_white = readImage("model/images/enemy/enemy_white.png", EnemyComposite.ENEMY_SIZE, EnemyComposite.ENEMY_SIZE);
+        enemy_yellow = readImage("model/images/enemy/enemy_yellow.png", EnemyComposite.ENEMY_SIZE, EnemyComposite.ENEMY_SIZE);
+
+        bullet = readImage("model/images/bullet.png", Bullet.WIDTH, Bullet.WIDTH);
+        bomb = readImage("model/images/bomb.png", Bomb.SIZE, Bomb.SIZE*2);
+
+        explode = readImage("model/images/explode.png", 25, 25);
+        e1 = readImage("model/images/explosion/e1.png", 25, 25);
+        e2 = readImage("model/images/explosion/e2.png", 25, 25);
+        e3 = readImage("model/images/explosion/e3.png", 25, 25);
+        e4 = readImage("model/images/explosion/e4.png", 25, 25);
+        e5 = readImage("model/images/explosion/e5.png", 25, 25);
+
         lightning = readImage("model/images/lightning.png", 30, GameBoard.HEIGHT-ShooterElement.SIZE);
         lightning_icon = readImage("model/images/lightning_icon.png", 15, 15);
 
 
-        shooterComponent1 = readImage("model/images/components/c1.png", 20, 20);
-        shooterComponent2 = readImage("model/images/components/c2.png", 20, 20);
-        shooterComponent3 = readImage("model/images/components/c3.png", 20, 20);
-        shooterComponent4 = readImage("model/images/components/c4.png", 20, 20);
+        sc1 = readImage("model/images/components/sc1.png", 20, 20);
+        sc2 = readImage("model/images/components/sc2.png", 20, 20);
+        sc3 = readImage("model/images/components/sc3.png", 20, 20);
+        sc4 = readImage("model/images/components/sc4.png", 20, 20);
 
 
     }

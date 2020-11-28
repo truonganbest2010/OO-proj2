@@ -1,13 +1,15 @@
 package model.bulletStrategyPattern;
 
 import model.Bullet;
+import model.EnemyComposite;
 
 public class BulletHitEnemyStrategy implements BulletMoveStrategy {
 
     private Bullet bullet;
 
-    public static final int MAX_MOVE = 5;
+    public static final int MAX_MOVE = 15;
     private int count;
+    private boolean moveRight;
 
     public BulletHitEnemyStrategy(Bullet bullet) {
         this.bullet = bullet;
@@ -18,12 +20,22 @@ public class BulletHitEnemyStrategy implements BulletMoveStrategy {
     public void moveAlgorithm() {
         
         if (count < MAX_MOVE) {
-            bullet.y -= 1;
+            if (moveRight) {
+                bullet.x += EnemyComposite.UNIT_MOVE;
+            }
+            else {
+                bullet.x -= EnemyComposite.UNIT_MOVE;
+            }
+            bullet.y -= 0.2;
             count++;
         } else {
             bullet.y = -10;
         }
 
+    }
+
+    public void setMoveRight(boolean moveRight) {
+        this.moveRight = moveRight;
     }
     
 }
