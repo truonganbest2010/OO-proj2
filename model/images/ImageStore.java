@@ -12,13 +12,19 @@ import model.ShooterElement;
 import view.GameBoard;
 
 public class ImageStore {
-    
-    public static BufferedImage enemy_white, enemy_yellow;
-    public static BufferedImage sc1, sc2, sc3, sc4;
-    public static BufferedImage explode, e1, e2, e3, e4, e5;
+    // Enemy
+    public static BufferedImage enemy_white, enemy_yellow; 
+    // Shooter Components
+    public static BufferedImage sc1, sc2, sc3, sc4; 
+    // Explosion Animation
+    public static BufferedImage explode, e1, e2, e3, e4, e5; 
+
     public static BufferedImage bullet;
     public static BufferedImage bomb;
-    public static BufferedImage lightning, lightning_icon;
+    public static BufferedImage lightning;
+    // Icon
+    public static BufferedImage health_icon, lightning_icon, target_icon;
+
 
 
 
@@ -37,7 +43,12 @@ public class ImageStore {
         e5 = readImage("model/images/explosion/e5.png", 25, 25);
 
         lightning = readImage("model/images/lightning.png", 30, GameBoard.HEIGHT-ShooterElement.SIZE);
-        lightning_icon = readImage("model/images/lightning_icon.png", 15, 15);
+
+        lightning_icon = readImage("model/images/icon/lightning_icon.png", 15, 15);
+        health_icon = readImage("model/images/icon/health_icon.png", 15, 15);
+        target_icon = readImage("model/images/icon/target_icon.png", 15, 15);
+
+
 
 
         sc1 = readImage("model/images/components/sc1.png", 20, 20);

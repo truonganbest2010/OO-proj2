@@ -111,10 +111,16 @@ public class Shooter extends GameElement {
             lg.render(g2);
         }
 
+
+        /** Shooter Info */
+
         g2.setColor(Color.white);
         g2.setFont(new Font("Courier", Font.BOLD, 10));
-        g2.drawString("" + lightningShoot, 5, GameBoard.HEIGHT - 10);
-        g2.drawImage(ImageStore.lightning_icon, null, 15, GameBoard.HEIGHT - 20);
+
+        g2.drawString("" + totalComponents, 25, GameBoard.HEIGHT - 30);
+        g2.drawImage(ImageStore.health_icon, null, 5, GameBoard.HEIGHT - 40);
+        g2.drawString("" + lightningShoot, 25, GameBoard.HEIGHT - 10);
+        g2.drawImage(ImageStore.lightning_icon, null, 5, GameBoard.HEIGHT - 20);
 
     }
 

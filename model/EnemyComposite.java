@@ -80,8 +80,9 @@ public class EnemyComposite extends GameElement implements Subject {
         }
 
         g2.setColor(Color.white);
-        g2.setFont(new Font("Courier", Font.BOLD, 30));
-        g2.drawString("" + enemiesKilled * TimerListener.SCORE_UP, 20, y + 40);
+        g2.setFont(new Font("Courier", Font.BOLD, 10));
+        g2.drawImage(ImageStore.target_icon, null, 5, 10);
+        g2.drawString("" + enemiesKilled * TimerListener.SCORE_UP, 25, 20);
 
     }
 
@@ -174,7 +175,6 @@ public class EnemyComposite extends GameElement implements Subject {
 
     public void processCollision(Shooter shooter) {
         // bullet vs enemies
-        var removeBullets = new ArrayList<GameElement>();
         for (var row: rows) {
             var removeEnemies = new ArrayList<GameElement>();
             for (var enemy: row) {
@@ -184,11 +184,10 @@ public class EnemyComposite extends GameElement implements Subject {
                         enemiesKilled+= removeEnemies.size();
                         notifyObservers(EVENT.GOT_SHOT);
                         
-                        // bullet.setImage(ImageStore.explode);
+                        /** Enemy explodes */ 
                         BulletHitEnemyStrategy bhes = new BulletHitEnemyStrategy(bullet);
                         bhes.setMoveRight(movingToRight);
                         bullet.setMoveStrategy(bhes);
-
                         bullet.setRenderStrategy(new BulletRenderHitEnemyStrategy(bullet));
                     }
                 }
@@ -208,7 +207,6 @@ public class EnemyComposite extends GameElement implements Subject {
             }
             row.removeAll(removeEnemies);
         }
-        // shooter.getWeapons().removeAll(removeBullets);
 
 
         if (enemiesKilled == totalEnemies) {
@@ -217,16 +215,18 @@ public class EnemyComposite extends GameElement implements Subject {
 
         // bullet vs bombs
         var removeBombs = new ArrayList<GameElement>();
-        removeBullets.clear();
         for (var b : bombs) {
             for (var bullet : shooter.getWeapons()) {
                 if (b.collideWith(bullet)) {
                     removeBombs.add(b);
-                    removeBullets.add(bullet);
+                    /** Bomb explodes */
+                    BulletHitEnemyStrategy bhes = new BulletHitEnemyStrategy(bullet);
+                    bhes.setMoveRight(true);
+                    bullet.setMoveStrategy(bhes);
+                    bullet.setRenderStrategy(new BulletRenderHitEnemyStrategy(bullet));
                 }
             }
         }
-        shooter.getWeapons().removeAll(removeBullets);
         bombs.removeAll(removeBombs);
 
         // bombs vs components
@@ -258,8 +258,6 @@ public class EnemyComposite extends GameElement implements Subject {
             }
         }
         shooter.getComponents().removeAll(removeComponents);
-
-        // System.out.println(observers.size());
 
     }
 
