@@ -72,7 +72,7 @@ public class Shooter extends GameElement {
 
     
 
-    public void removeOutOfBound() {
+    public void removeOutOfUpperBound() {
         var remove = new ArrayList<GameElement>();
         for (var w: weapons) {
             if (w.y < 0) remove.add(w);

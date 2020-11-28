@@ -32,7 +32,7 @@ public class EnemyObserver implements Observer {
     public void enemiesReachBottom() {
         // TODO Auto-generated method stub
         gameBoard.setGameOver(true);
-        gameBoard.getCanvas().getGameElements().clear();
+        // gameBoard.getCanvas().getGameElements().clear();
         gameBoard.getCanvas().getGameElements().add(new GameOverDraw(0, 0, gameBoard.getCanvas().getWidth(), gameBoard.getCanvas().getHeight(), new Color(255, 51, 51, 96)));
         gameBoard.getCanvas().getGameElements().add(new TextDraw("YOU LOST!", gameBoard.getCanvas().getWidth()/2 - 120, gameBoard.getCanvas().getHeight()/2 - 70, Color.RED, 50));
         showScore();
@@ -42,7 +42,7 @@ public class EnemyObserver implements Observer {
     public void enemiesAllGone() {
         // TODO Auto-generated method stub
         gameBoard.setGameOver(true);
-        gameBoard.getCanvas().getGameElements().clear();
+        // gameBoard.getCanvas().getGameElements().clear();
         gameBoard.getCanvas().getGameElements().add(new GameOverDraw(0, 0, gameBoard.getCanvas().getWidth(), gameBoard.getCanvas().getHeight(), new Color(0, 255, 250, 96)));
         gameBoard.getCanvas().getGameElements().add(new TextDraw("YOU WON!", gameBoard.getCanvas().getWidth()/2 - 120, gameBoard.getCanvas().getHeight()/2 - 70, Color.GREEN, 50));
         showScore();
@@ -52,7 +52,7 @@ public class EnemyObserver implements Observer {
     public void enemiesDestroyedComponents() {
         // TODO Auto-generated method stub
         gameBoard.setGameOver(true);
-        gameBoard.getCanvas().getGameElements().clear();
+        // gameBoard.getCanvas().getGameElements().clear();
         gameBoard.getCanvas().getGameElements().add(new GameOverDraw(0, 0, gameBoard.getCanvas().getWidth(), gameBoard.getCanvas().getHeight(), new Color(255, 51, 51, 96)));
         gameBoard.getCanvas().getGameElements().add(new TextDraw("YOU LOST!", gameBoard.getCanvas().getWidth()/2 - 120, gameBoard.getCanvas().getHeight()/2 - 70, Color.RED, 50));
         showScore();

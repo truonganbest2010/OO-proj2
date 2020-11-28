@@ -4,7 +4,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-import controller.TimerListener;
 import model.observerPattern.Observer;
 import model.observerPattern.Subject;
 import model.bulletStrategyPattern.BulletHitEnemyStrategy;
@@ -31,10 +30,14 @@ public class EnemyComposite extends GameElement implements Subject {
 
     private ArrayList<ArrayList<GameElement>> rows;
     private ArrayList<GameElement> bombs;
+
+    private ArrayList<GameElement> bonusDroppers;
+    private ArrayList<GameElement> bonus;
+
+
     public boolean movingToRight;
     private Random random = new Random();
 
-    
 
     private int totalEnemies = NROWS * NCOLS;
     public int enemiesKilled = 0;
@@ -42,12 +45,15 @@ public class EnemyComposite extends GameElement implements Subject {
     public EnemyComposite() {
         rows = new ArrayList<>();
         bombs = new ArrayList<>();
+        bonusDroppers = new ArrayList<>();
+        bonus = new ArrayList<>();
 
+        /** Enemies Formation */
         for (int r = 0; r < NROWS; r++) {
             var oneRow = new ArrayList<GameElement>();
             rows.add(oneRow);
             for (int c = 0; c < NCOLS; c++) {
-                Enemy enemy = new Enemy(c * ENEMY_SIZE * 2, r * ENEMY_SIZE * 2, ENEMY_SIZE, Color.yellow, true);
+                Enemy enemy = new Enemy(c * ENEMY_SIZE * 2, r * ENEMY_SIZE * 2 +20, ENEMY_SIZE, Color.yellow, true);
                 if (r%2 == 0) {
                     if (c%2 == 0) {
                         enemy.setImage(ImageStore.enemy_white);
@@ -57,16 +63,26 @@ public class EnemyComposite extends GameElement implements Subject {
                         enemy.setImage(ImageStore.enemy_white);
                     } else enemy.setImage(ImageStore.enemy_yellow);
                 }
-
                 oneRow.add(enemy);
             }
         }
 
+        /** Bonus Dropper */
+        for (int c = 0; c < NCOLS; c++) {
+            BonusDropper dropper = new BonusDropper(c * ENEMY_SIZE * 2, 0);
+            bonusDroppers.add(dropper);
+        }
     }
 
 
     @Override
     public void render(Graphics2D g2) {
+
+        // render bonus
+        for (var bn : bonus) {
+            bn.render(g2);
+        }
+
         // render enemy array
         for (var r : rows) {
             for (var e : r) {
@@ -79,10 +95,12 @@ public class EnemyComposite extends GameElement implements Subject {
             b.render(g2);
         }
 
+        
+
         g2.setColor(Color.white);
         g2.setFont(new Font("Courier", Font.BOLD, 10));
         g2.drawImage(ImageStore.target_icon, null, 5, 10);
-        g2.drawString("" + enemiesKilled * TimerListener.SCORE_UP, 25, 20);
+        g2.drawString("" + enemiesKilled, 25, 20);
 
     }
 
@@ -105,15 +123,23 @@ public class EnemyComposite extends GameElement implements Subject {
                 moveDown();
             }
         }
-        // update x loc
+        // update enemy x loc
         for (var row : rows) {
             for (var e : row) {
                 e.x += dx;
             }
         }
+        // update dropper x loc
+        for (var d: bonusDroppers) {
+            d.x += dx;
+        }
         // animate bombs
         for (var b : bombs) {
             b.animate();
+        }
+        // animate bonus
+        for (var bn: bonus) {
+            bn.animate();
         }
 
     }
@@ -162,7 +188,15 @@ public class EnemyComposite extends GameElement implements Subject {
         }
     }
 
-    public void removeBombsOutOfBound() {
+    public void dropBonus() {
+        for (var d: bonusDroppers) {
+            if (random.nextFloat() < 0.1F && bonus.size() < 1) {
+                bonus.add(new Bonus(d.x, d.y));
+            }
+        }
+    }
+
+    public void removeOutOfLowerBound() {
         var remove = new ArrayList<GameElement>();
         for (var b : bombs) {
             if (b.y >= GameBoard.HEIGHT) {
@@ -170,6 +204,12 @@ public class EnemyComposite extends GameElement implements Subject {
             }
         }
         bombs.removeAll(remove);
+        for (var bn: bonus) {
+            if (bn.y >= GameBoard.HEIGHT) {
+                remove.add(bn);
+            }
+        }
+        bonus.removeAll(remove); 
     }
 
 

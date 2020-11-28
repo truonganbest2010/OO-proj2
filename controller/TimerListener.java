@@ -22,9 +22,13 @@ public class TimerListener implements ActionListener {
 
     private GameBoard gameBoard;
     private LinkedList<EVENT_TYPE> eventQueue;
+
     private final int BOMB_DROP_FREQ = 50;
+    private final int BONUS_DROP_FREQ = 100;
+
     
-    private int frameCounter = 0;
+    private int bomb_frameCounter = 0;
+    private int bonus_frameCounter = 0;
 
     public TimerListener(GameBoard gameBoard) {
         this.gameBoard = gameBoard;
@@ -33,7 +37,8 @@ public class TimerListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ++frameCounter;
+        ++bomb_frameCounter;
+        ++bonus_frameCounter;
         // System.out.println(frameCounter);
         if (!gameBoard.isGameOver()) {
             update();
@@ -41,10 +46,14 @@ public class TimerListener implements ActionListener {
             processCollision();
     
         } else {
+            update();
             gameBoard.getStartBtn().setText("New Game");
             gameBoard.getPauseBtn().setEnabled(false);
             gameBoard.getStartBtn().setEnabled(true);
-            gameBoard.getTimer().stop();
+            // gameBoard.getTimer().stop();
+            bomb_frameCounter = 0;
+            bonus_frameCounter = 0;
+
         }
 
         gameBoard.getCanvas().repaint();
@@ -85,17 +94,22 @@ public class TimerListener implements ActionListener {
                 }
         }
 
-        if (frameCounter == BOMB_DROP_FREQ) {
+        if (bomb_frameCounter == BOMB_DROP_FREQ) {
             gameBoard.getEnemyComposite().dropBombs();
-            frameCounter = 0;
+            bomb_frameCounter = 0;
         }
+        if (bonus_frameCounter == BONUS_DROP_FREQ) {
+            gameBoard.getEnemyComposite().dropBonus();
+            bonus_frameCounter = 0;
+        }
+        
     }
 
     private void processCollision() {
         var shooter = gameBoard.getShooter();
         var enemyComposite = gameBoard.getEnemyComposite();
-        shooter.removeOutOfBound();
-        enemyComposite.removeBombsOutOfBound();
+        shooter.removeOutOfUpperBound();
+        enemyComposite.removeOutOfLowerBound();
         enemyComposite.processCollision(shooter);
         
     }
