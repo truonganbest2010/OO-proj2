@@ -1,5 +1,7 @@
 package model;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+
 
 public abstract class GameElement {
     
@@ -10,6 +12,8 @@ public abstract class GameElement {
     public boolean filled;
     public int width;
     public int height;
+
+    private BufferedImage image;
 
     public GameElement(int x, int y, Color color, boolean filled, int width, int height) {
         this.x = x;
@@ -39,4 +43,11 @@ public abstract class GameElement {
 
     public abstract void render(Graphics2D g2);
     public abstract void animate();
+
+    public BufferedImage getImage() {
+        return image;
+    }
+    public void setImage(BufferedImage image) {
+        this.image = image;
+    }
 }

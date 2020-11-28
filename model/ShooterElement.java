@@ -13,13 +13,15 @@ public class ShooterElement extends GameElement {
     @Override
     public void render(Graphics2D g2) {
         // TODO Auto-generated method stub
-        g2.setColor(color);
-        if (super.filled) {
-            g2.fillRect(x, y, width, height);
-        }
-        else {
-            g2.drawRect(x, y, width, height);
-        }
+        // g2.setColor(color);
+        // if (super.filled) {
+        //     g2.fillRect(x, y, width, height);
+        // }
+        // else {
+        //     g2.drawRect(x, y, width, height);
+        // }
+        g2.drawImage(getImage(), null, x, y);
+
     }
 
     @Override

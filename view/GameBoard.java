@@ -13,7 +13,7 @@ import javax.swing.*;
 public class GameBoard {
 
     public static final int WIDTH = 800;
-    public static final int HEIGHT = 600;
+    public static final int HEIGHT = 800;
     public static final int FPS = 40;
     public static final int DELAY = 1000/FPS;
     
@@ -77,6 +77,11 @@ public class GameBoard {
 
             EnemyObserver observer = new EnemyObserver(this);
             enemyComposite.addEnemyListener(observer);
+
+            if (!startBtn.isEnabled()) {
+                pauseBtn.setText("Pause");
+            }
+            
         });
 
         pauseBtn.addActionListener(e -> {

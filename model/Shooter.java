@@ -3,6 +3,7 @@ package model;
 import java.awt.*;
 import java.util.ArrayList;
 
+import model.images.ImageStore;
 import view.GameBoard;
 
 public class Shooter extends GameElement {
@@ -10,11 +11,11 @@ public class Shooter extends GameElement {
     public static final int UNIT_MOVE = 10;
     public static final int MAX_BULLETS = 5;
 
-    private int laserCount = 10;
+    private int lightningShoot = 10;
 
     private ArrayList<GameElement> components = new ArrayList<>();
-    private ArrayList<GameElement> weapons = new ArrayList<>();
-    private ArrayList<Laser> laserGun = new ArrayList<>();
+    private ArrayList<Bullet> weapons = new ArrayList<>();
+    private ArrayList<Lightning> lightningGun = new ArrayList<>();
     private ArrayList<GameElement> bottomLine = new ArrayList<>();
 
     public int totalComponents;
@@ -24,9 +25,13 @@ public class Shooter extends GameElement {
 
         var size = ShooterElement.SIZE;
         var s1 = new ShooterElement(x-size, y-size, Color.white, false);
+         s1.setImage(ImageStore.shooterComponent1);
         var s2 = new ShooterElement(x, y-size, Color.white, false);
+         s2.setImage(ImageStore.shooterComponent2);
         var s3 = new ShooterElement(x-size, y, Color.white, false);
+         s3.setImage(ImageStore.shooterComponent3);
         var s4 = new ShooterElement(x, y, Color.white, false);
+         s4.setImage(ImageStore.shooterComponent4);
         components.add(s1);
         components.add(s2);
         components.add(s3);
@@ -54,16 +59,15 @@ public class Shooter extends GameElement {
         return weapons.size() < MAX_BULLETS;
     }
 
-    public boolean canFireLaser() {
-        return laserCount > 0 && laserGun.size() < 1;
+    public boolean canFireLightning() {
+        return lightningShoot > 0 && lightningGun.size() < 1;
+    }
+    public int getLightningShoot() {
+        return lightningShoot;
     }
 
-    public int getLaserCount() {
-        return laserCount;
-    }
-
-    public void setLaserCount(int laserCount) {
-        this.laserCount = laserCount;
+    public void setlightningShoot(int lightningShoot) {
+        this.lightningShoot = lightningShoot;
     }
 
     
@@ -75,17 +79,17 @@ public class Shooter extends GameElement {
         }
         weapons.removeAll(remove);
 
-        for (var lg: laserGun) {
+        for (var lg: lightningGun) {
             if (lg.y < 0) remove.add(lg);
         }
-        laserGun.removeAll(remove);
+        lightningGun.removeAll(remove);
     }
 
-    public ArrayList<GameElement> getWeapons() {
+    public ArrayList<Bullet> getWeapons() {
         return weapons;
     }
-    public ArrayList<Laser> getLaserGun() {
-        return laserGun;
+    public ArrayList<Lightning> getLightningGun() {
+        return lightningGun;
     }
     public ArrayList<GameElement> getComponents() {
         return components;
@@ -103,9 +107,14 @@ public class Shooter extends GameElement {
         for (var w: weapons) {
             w.render(g2);
         }
-        for (var lg: laserGun) {
+        for (var lg: lightningGun) {
             lg.render(g2);
         }
+
+        g2.setColor(Color.white);
+        g2.setFont(new Font("Courier", Font.BOLD, 10));
+        g2.drawString("" + lightningShoot, 5, GameBoard.HEIGHT - 10);
+        g2.drawImage(ImageStore.lightning_icon, null, 15, GameBoard.HEIGHT - 20);
 
     }
 
@@ -115,7 +124,7 @@ public class Shooter extends GameElement {
         for (var w: weapons) {
             w.animate();
         }
-        for  (var lg: laserGun) {
+        for  (var lg: lightningGun) {
             lg.animate();
         }
 

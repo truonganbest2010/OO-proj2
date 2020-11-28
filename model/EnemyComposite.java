@@ -7,12 +7,14 @@ import java.util.Random;
 import controller.TimerListener;
 import model.observerPattern.Observer;
 import model.observerPattern.Subject;
-import model.laserStrategyPattern.*;
+import model.bulletStrategyPattern.BulletHitEnemyStrategy;
+import model.bulletStrategyPattern.BulletRenderHitEnemyStrategy;
+import model.images.ImageStore;
 import view.GameBoard;
 
 public class EnemyComposite extends GameElement implements Subject {
 
-    public static final int NROWS = 4;
+    public static final int NROWS = 5;
     public static final int NCOLS = 15;
     public static final int ENEMY_SIZE = 20;
     public static final int UNIT_MOVE = 3;
@@ -32,6 +34,8 @@ public class EnemyComposite extends GameElement implements Subject {
     private boolean movingToRight = true;
     private Random random = new Random();
 
+    
+
     private int totalEnemies = NROWS * NCOLS;
     public int enemiesKilled = 0;
 
@@ -43,7 +47,9 @@ public class EnemyComposite extends GameElement implements Subject {
             var oneRow = new ArrayList<GameElement>();
             rows.add(oneRow);
             for (int c = 0; c < NCOLS; c++) {
-                oneRow.add(new Enemy(c * ENEMY_SIZE * 2, r * ENEMY_SIZE * 2, ENEMY_SIZE, Color.yellow, true));
+                Enemy enemy = new Enemy(c * ENEMY_SIZE * 2, r * ENEMY_SIZE * 2, ENEMY_SIZE, Color.yellow, true);
+                enemy.setImage(ImageStore.enemy);
+                oneRow.add(enemy);
             }
         }
 
@@ -165,20 +171,21 @@ public class EnemyComposite extends GameElement implements Subject {
             for (var enemy: row) {
                 for (var bullet : shooter.getWeapons()) {
                     if (enemy.collideWith(bullet)) {
-                        removeBullets.add(bullet);
                         removeEnemies.add(enemy);
                         enemiesKilled+= removeEnemies.size();
                         notifyObservers(EVENT.GOT_SHOT);
+                        
+                        bullet.setImage(ImageStore.explode);
+                        bullet.setMoveStrategy(new BulletHitEnemyStrategy(bullet));
+                        bullet.setRenderStrategy(new BulletRenderHitEnemyStrategy(bullet));
                     }
                 }
 
-                for (var laser: shooter.getLaserGun()) {
+                for (var laser: shooter.getLightningGun()) {
                     if (enemy.collideWith(laser)) {
                         removeEnemies.add(enemy);
                         enemiesKilled+= removeEnemies.size();
                         notifyObservers(EVENT.GOT_SHOT);
-                        laser.setFireStrategy(new LaserFireAtEnemy(laser));
-                        laser.setRenderStrategy(new LaserRenderFireAtEnemy(laser));
                     }
                 }
 
@@ -189,7 +196,7 @@ public class EnemyComposite extends GameElement implements Subject {
             }
             row.removeAll(removeEnemies);
         }
-        shooter.getWeapons().removeAll(removeBullets);
+        // shooter.getWeapons().removeAll(removeBullets);
 
 
         if (enemiesKilled == totalEnemies) {

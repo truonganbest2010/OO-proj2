@@ -7,9 +7,9 @@ import java.util.LinkedList;
 import model.Bullet;
 import model.*;
 import model.Shooter;
+import model.bulletStrategyPattern.*;
 import view.GameBoard;
-
-import model.laserStrategyPattern.*;
+import model.images.ImageStore;
 
 
 public class TimerListener implements ActionListener {
@@ -66,16 +66,20 @@ public class TimerListener implements ActionListener {
                     shooter.moveRight();
                     break;
                 case KEY_SPACE:
-                    if (shooter.canFireBullets())
-                        shooter.getWeapons().add(new Bullet(shooter.x, shooter.y));
+                    if (shooter.canFireBullets()) {
+                        Bullet bullet = new Bullet(shooter.x, shooter.y);
+                        bullet.setImage(ImageStore.bullet);
+                        bullet.setMoveStrategy(new BulletMoveForwardStrategy(bullet));
+                        bullet.setRenderStrategy(new BulletRenderMoveForwardStrategy(bullet));
+                        shooter.getWeapons().add(bullet);
+                    }
                     break;
                 case KEY_L:
-                    if (shooter.canFireLaser()) {
-                        // shooter.setLaserCount(shooter.getLaserCount()-1);
-                        Laser laser = new Laser(shooter.x, 1);
-                        shooter.getLaserGun().add(laser);
-                        laser.setFireStrategy(new LaserFireIntoSpace(laser));
-                        laser.setRenderStrategy(new LaserRenderFireIntoSpace(laser));
+                    if (shooter.canFireLightning()) {
+                        shooter.setlightningShoot(shooter.getLightningShoot()-1); // decrease lightning shoots
+                        Lightning lightning = new Lightning(shooter.x, 1);
+                        lightning.setImage(ImageStore.lightning);
+                        shooter.getLightningGun().add(lightning);
                     }
                     break;
                 }
