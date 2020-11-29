@@ -64,7 +64,7 @@ public class BonusDropper extends GameElement {
     public void dropBonus() {
         if (bonusDropper.size() < 1) {
             Random x = new Random();
-            bonusDropper.add(new BonusLightning(x.nextInt(GameBoard.WIDTH), 0));
+            bonusDropper.add(new BonusLightning(x.nextInt(GameBoard.WIDTH-BonusLightning.WIDTH), 0));
         }
         moveStrategy = new BonusFallForwardStrategy(this);
         renderStrategy = new BonusRenderMoveForwardStrategy(this);
