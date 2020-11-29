@@ -71,9 +71,6 @@ public class EnemyComposite extends GameElement implements Subject {
             droppers.add(dropper);
         }
     }
-    public ArrayList<GameElement> getDroppers() {
-        return droppers;
-    }
 
 
     @Override
