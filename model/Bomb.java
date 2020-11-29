@@ -6,7 +6,7 @@ import model.images.ImageStore;
 
 public class Bomb extends GameElement {
 
-    public static final int SIZE = 10;
+    public static final int SIZE = 12;
     public static final int UNIT_MOVE = 5;
 
     public Bomb(int x, int y) {

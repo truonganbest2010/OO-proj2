@@ -9,7 +9,7 @@ import model.bulletStrategyPattern.BulletRenderStrategy;
 
 public class Bullet extends GameElement {
 
-    public static final int WIDTH = 7;
+    public static final int WIDTH = 10;
     public static final int UNIT_MOVE = 10;
     private BulletMoveStrategy moveStrategy;
     private BulletRenderStrategy renderStrategy;

@@ -1,6 +1,8 @@
 package model.bonusStrategyPattern;
 
 import model.BonusDropper;
+import model.ShooterElement;
+import view.GameBoard;
 
 public class BonusAfterHitShooterStrategy implements BonusMoveStrategy {
 
@@ -11,11 +13,14 @@ public class BonusAfterHitShooterStrategy implements BonusMoveStrategy {
 
     public BonusAfterHitShooterStrategy(BonusDropper bonusDropper) {
         this.bonusDropper = bonusDropper;
+        for (var bn: bonusDropper.getBonusDropper()) {
+            bn.y = GameBoard.HEIGHT - ShooterElement.SIZE*4;
+        }
     }
 
     @Override
     public void moveAlgorithm() {
-        
+
         if (count < MAX_MOVE) {
             for (var bn: bonusDropper.getBonusDropper()) {
                 bn.y -= 3;
