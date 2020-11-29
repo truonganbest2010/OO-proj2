@@ -2,7 +2,6 @@ package view;
 
 import java.awt.*;
 import java.util.ArrayList;
-
 import javax.swing.*;
 
 import model.GameElement;
@@ -11,12 +10,12 @@ public class MyCanvas extends JPanel {
     
     private GameBoard gameBoard;
     private ArrayList<GameElement> gameElements = new ArrayList<>();
-    private ArrayList<GameElement> starsBackground = new ArrayList<>();
 
     public MyCanvas(GameBoard gameBoard, int width, int height) {
         this.gameBoard = gameBoard;
         setBackground(Color.black);
         setPreferredSize(new Dimension(width, height));
+        
     }
 
     @Override
@@ -33,4 +32,7 @@ public class MyCanvas extends JPanel {
     public ArrayList<GameElement> getGameElements() {
         return gameElements;
     }
+
+
+    
 }

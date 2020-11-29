@@ -2,11 +2,11 @@ package model;
 
 import java.awt.Graphics2D;
 
-public class BonusDropper extends GameElement {
+public class Dropper extends GameElement {
 
     private static final int WIDTH = 5;
 
-    public BonusDropper(int x, int y){
+    public Dropper(int x, int y){
         super(x, y, WIDTH, WIDTH);
     }
     @Override

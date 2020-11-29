@@ -5,6 +5,7 @@ import controller.TimerListener;
 import model.EnemyComposite;
 import model.Shooter;
 import model.ShooterElement;
+import model.StarDrop;
 import model.observerPattern.EnemyObserver;
 
 import java.awt.*;
@@ -21,6 +22,7 @@ public class GameBoard {
     private MyCanvas canvas;
     private Shooter shooter;
     private EnemyComposite enemyComposite;
+    private StarDrop starDrop;
     private Timer timer;
     private TimerListener timerListener;
 
@@ -68,7 +70,9 @@ public class GameBoard {
             startBtn.setEnabled(false);
             shooter = new Shooter(GameBoard.WIDTH/2, GameBoard.HEIGHT-ShooterElement.SIZE);
             enemyComposite = new EnemyComposite();
+            starDrop = new StarDrop();
             canvas.getGameElements().clear();
+            canvas.getGameElements().add(starDrop);
             canvas.getGameElements().add(shooter);
             canvas.getGameElements().add(enemyComposite);
             score = 0;
@@ -117,6 +121,9 @@ public class GameBoard {
     }
     public Shooter getShooter() {
         return shooter;
+    }
+    public StarDrop getStarDrop() {
+        return starDrop;
     }
     public EnemyComposite getEnemyComposite() {
         return enemyComposite;

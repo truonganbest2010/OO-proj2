@@ -27,17 +27,15 @@ public class EnemyComposite extends GameElement implements Subject {
 
     private ArrayList<Observer> observers = new ArrayList<>();
 
-
     private ArrayList<ArrayList<GameElement>> rows;
     private ArrayList<GameElement> bombs;
 
-    private ArrayList<GameElement> bonusDroppers;
+    private ArrayList<GameElement> droppers;
     private ArrayList<GameElement> bonus;
 
 
     public boolean movingToRight;
     private Random random = new Random();
-
 
     private int totalEnemies = NROWS * NCOLS;
     public int enemiesKilled = 0;
@@ -45,7 +43,7 @@ public class EnemyComposite extends GameElement implements Subject {
     public EnemyComposite() {
         rows = new ArrayList<>();
         bombs = new ArrayList<>();
-        bonusDroppers = new ArrayList<>();
+        droppers = new ArrayList<>();
         bonus = new ArrayList<>();
 
         /** Enemies Formation */
@@ -69,9 +67,12 @@ public class EnemyComposite extends GameElement implements Subject {
 
         /** Bonus Dropper */
         for (int c = 0; c < NCOLS; c++) {
-            BonusDropper dropper = new BonusDropper(c * ENEMY_SIZE * 2, 0);
-            bonusDroppers.add(dropper);
+            Dropper dropper = new Dropper(c * ENEMY_SIZE * 2, 0);
+            droppers.add(dropper);
         }
+    }
+    public ArrayList<GameElement> getDroppers() {
+        return droppers;
     }
 
 
@@ -95,13 +96,11 @@ public class EnemyComposite extends GameElement implements Subject {
             b.render(g2);
         }
 
-        
 
         g2.setColor(Color.white);
         g2.setFont(new Font("Courier", Font.BOLD, 10));
         g2.drawImage(ImageStore.target_icon, null, 5, 10);
         g2.drawString("" + enemiesKilled, 25, 20);
-
     }
 
     @Override
@@ -130,7 +129,7 @@ public class EnemyComposite extends GameElement implements Subject {
             }
         }
         // update dropper x loc
-        for (var d: bonusDroppers) {
+        for (var d: droppers) {
             d.x += dx;
         }
         // animate bombs
@@ -159,7 +158,7 @@ public class EnemyComposite extends GameElement implements Subject {
 
     private int leftEnd() {
         int xEnd = 9000;
-        for (var row : rows) {
+        for (var row: rows) {
             if (row.size() == 0)
                 continue;
             int x = row.get(0).x;
@@ -171,8 +170,8 @@ public class EnemyComposite extends GameElement implements Subject {
 
     private void moveDown() {
         int dy = UNIT_MOVE_DOWN;
-        for (var row : rows) {
-            for (var e : row) {
+        for (var row: rows) {
+            for (var e: row) {
                 e.y += dy;
             }
         }
@@ -189,7 +188,7 @@ public class EnemyComposite extends GameElement implements Subject {
     }
 
     public void dropBonus() {
-        for (var d: bonusDroppers) {
+        for (var d: droppers) {
             if (random.nextFloat() < 0.1F && bonus.size() < 1) {
                 bonus.add(new Bonus(d.x, d.y));
             }

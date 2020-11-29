@@ -26,9 +26,12 @@ public class TimerListener implements ActionListener {
     private final int BOMB_DROP_FREQ = 50;
     private final int BONUS_DROP_FREQ = 100;
 
+    private final int STAR_FALL_FREQ = 2;
+
     
     private int bomb_frameCounter = 0;
     private int bonus_frameCounter = 0;
+    private int star_frameCounter = 0;
 
     public TimerListener(GameBoard gameBoard) {
         this.gameBoard = gameBoard;
@@ -39,6 +42,7 @@ public class TimerListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         ++bomb_frameCounter;
         ++bonus_frameCounter;
+        ++star_frameCounter;
         // System.out.println(frameCounter);
         if (!gameBoard.isGameOver()) {
             update();
@@ -56,6 +60,11 @@ public class TimerListener implements ActionListener {
 
         }
 
+        if (star_frameCounter == STAR_FALL_FREQ) {
+            gameBoard.getStarDrop().dropStars();
+            star_frameCounter = 0;
+        }
+        gameBoard.getStarDrop().removeStarsOutOfBound();
         gameBoard.getCanvas().repaint();
     }
 
@@ -111,7 +120,6 @@ public class TimerListener implements ActionListener {
         shooter.removeOutOfUpperBound();
         enemyComposite.removeOutOfLowerBound();
         enemyComposite.processCollision(shooter);
-        
     }
 
 
