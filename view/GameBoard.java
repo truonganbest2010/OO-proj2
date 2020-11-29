@@ -2,6 +2,7 @@ package view;
 
 import controller.KeyController;
 import controller.TimerListener;
+import model.BonusDropper;
 import model.EnemyComposite;
 import model.Shooter;
 import model.ShooterElement;
@@ -20,9 +21,13 @@ public class GameBoard {
     
     private JFrame window;
     private MyCanvas canvas;
+
+    /** model */
     private Shooter shooter;
     private EnemyComposite enemyComposite;
     private StarDrop starDrop;
+    private BonusDropper bonusDropper;
+
     private Timer timer;
     private TimerListener timerListener;
 
@@ -59,6 +64,7 @@ public class GameBoard {
         southPanel.add(quitBtn);
         cp.add(BorderLayout.SOUTH, southPanel);
 
+        canvas.getGameElements().add(new StarDrop());
         canvas.getGameElements().add(new TextDraw("Click <Start> to play", WIDTH/3 - 50, HEIGHT/2, Color.yellow, 30));
         
         timerListener = new TimerListener(this);
@@ -71,8 +77,10 @@ public class GameBoard {
             shooter = new Shooter(GameBoard.WIDTH/2, GameBoard.HEIGHT-ShooterElement.SIZE);
             enemyComposite = new EnemyComposite();
             starDrop = new StarDrop();
+            bonusDropper = new BonusDropper(this);
             canvas.getGameElements().clear();
             canvas.getGameElements().add(starDrop);
+            canvas.getGameElements().add(bonusDropper);
             canvas.getGameElements().add(shooter);
             canvas.getGameElements().add(enemyComposite);
             score = 0;
@@ -121,6 +129,9 @@ public class GameBoard {
     }
     public Shooter getShooter() {
         return shooter;
+    }
+    public BonusDropper getBonusDropper() {
+        return bonusDropper;
     }
     public StarDrop getStarDrop() {
         return starDrop;

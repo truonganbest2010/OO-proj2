@@ -13,17 +13,14 @@ public class Star extends GameElement {
 
     @Override
     public void render(Graphics2D g2) {
-        // TODO Auto-generated method stub
-        g2.setColor(Color.white);
+
+        g2.setColor(Color.gray);
         
         g2.fillOval(x, y, width, height);
-        
+    
     }
 
     @Override
-    public void animate() {
-        // TODO Auto-generated method stub
-        
-    }
+    public void animate() { }
     
 }

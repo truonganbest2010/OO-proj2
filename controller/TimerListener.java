@@ -24,11 +24,9 @@ public class TimerListener implements ActionListener {
     private LinkedList<EVENT_TYPE> eventQueue;
 
     private final int BOMB_DROP_FREQ = 50;
-    private final int BONUS_DROP_FREQ = 100;
-
+    private final int BONUS_DROP_FREQ = 200;
     private final int STAR_FALL_FREQ = 2;
 
-    
     private int bomb_frameCounter = 0;
     private int bonus_frameCounter = 0;
     private int star_frameCounter = 0;
@@ -108,7 +106,7 @@ public class TimerListener implements ActionListener {
             bomb_frameCounter = 0;
         }
         if (bonus_frameCounter == BONUS_DROP_FREQ) {
-            gameBoard.getEnemyComposite().dropBonus();
+            gameBoard.getBonusDropper().dropBonus();
             bonus_frameCounter = 0;
         }
         
@@ -117,9 +115,11 @@ public class TimerListener implements ActionListener {
     private void processCollision() {
         var shooter = gameBoard.getShooter();
         var enemyComposite = gameBoard.getEnemyComposite();
+        var bonusDropper = gameBoard.getBonusDropper();
         shooter.removeOutOfUpperBound();
         enemyComposite.removeOutOfLowerBound();
-        enemyComposite.processCollision(shooter);
+        bonusDropper.removeBonusOutOfLowerBound();
+        enemyComposite.processCollisionWithEnemy(shooter);
     }
 
 
@@ -131,6 +131,10 @@ public class TimerListener implements ActionListener {
 
     public LinkedList<EVENT_TYPE> getEventQueue() {
         return eventQueue;
+    }
+    
+    public void setBonus_frameCounter(int bonus_frameCounter) {
+        this.bonus_frameCounter = bonus_frameCounter;
     }
 
 }

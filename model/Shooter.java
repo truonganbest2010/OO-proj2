@@ -11,7 +11,7 @@ public class Shooter extends GameElement {
     public static final int UNIT_MOVE = 10;
     public static final int MAX_BULLETS = 5;
 
-    private int lightningShoot = 10;
+    private int lightningShoot = 1;
 
     private ArrayList<GameElement> components = new ArrayList<>();
     private ArrayList<Bullet> weapons = new ArrayList<>();

@@ -9,7 +9,7 @@ import view.GameBoard;
 public class StarDrop extends GameElement {
 
     public static final int UNIT_MOVE = 2;
-    public static final int ASTEROID_SIZE_RANGE = 5;
+    public static final int ASTEROID_SIZE_RANGE = 8;
     private ArrayList<GameElement> starsBackground;
 
     public StarDrop() {

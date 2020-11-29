@@ -30,10 +30,6 @@ public class EnemyComposite extends GameElement implements Subject {
     private ArrayList<ArrayList<GameElement>> rows;
     private ArrayList<GameElement> bombs;
 
-    private ArrayList<GameElement> droppers;
-    private ArrayList<GameElement> bonus;
-
-
     public boolean movingToRight;
     private Random random = new Random();
 
@@ -43,9 +39,7 @@ public class EnemyComposite extends GameElement implements Subject {
     public EnemyComposite() {
         rows = new ArrayList<>();
         bombs = new ArrayList<>();
-        droppers = new ArrayList<>();
-        bonus = new ArrayList<>();
-
+        
         /** Enemies Formation */
         for (int r = 0; r < NROWS; r++) {
             var oneRow = new ArrayList<GameElement>();
@@ -65,21 +59,12 @@ public class EnemyComposite extends GameElement implements Subject {
             }
         }
 
-        /** Bonus Dropper */
-        for (int c = 0; c < NCOLS; c++) {
-            Dropper dropper = new Dropper(c * ENEMY_SIZE * 2, 0);
-            droppers.add(dropper);
-        }
+        
     }
 
 
     @Override
     public void render(Graphics2D g2) {
-
-        // render bonus
-        for (var bn : bonus) {
-            bn.render(g2);
-        }
 
         // render enemy array
         for (var r : rows) {
@@ -125,17 +110,9 @@ public class EnemyComposite extends GameElement implements Subject {
                 e.x += dx;
             }
         }
-        // update dropper x loc
-        for (var d: droppers) {
-            d.x += dx;
-        }
         // animate bombs
         for (var b : bombs) {
             b.animate();
-        }
-        // animate bonus
-        for (var bn: bonus) {
-            bn.animate();
         }
 
     }
@@ -184,13 +161,7 @@ public class EnemyComposite extends GameElement implements Subject {
         }
     }
 
-    public void dropBonus() {
-        for (var d: droppers) {
-            if (random.nextFloat() < 0.1F && bonus.size() < 1) {
-                bonus.add(new Bonus(d.x, d.y));
-            }
-        }
-    }
+   
 
     public void removeOutOfLowerBound() {
         var remove = new ArrayList<GameElement>();
@@ -200,16 +171,10 @@ public class EnemyComposite extends GameElement implements Subject {
             }
         }
         bombs.removeAll(remove);
-        for (var bn: bonus) {
-            if (bn.y >= GameBoard.HEIGHT) {
-                remove.add(bn);
-            }
-        }
-        bonus.removeAll(remove); 
     }
 
 
-    public void processCollision(Shooter shooter) {
+    public void processCollisionWithEnemy(Shooter shooter) {
         // bullet vs enemies
         for (var row: rows) {
             var removeEnemies = new ArrayList<GameElement>();
