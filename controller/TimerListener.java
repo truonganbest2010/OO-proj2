@@ -116,10 +116,13 @@ public class TimerListener implements ActionListener {
         var shooter = gameBoard.getShooter();
         var enemyComposite = gameBoard.getEnemyComposite();
         var bonusDropper = gameBoard.getBonusDropper();
+        
         shooter.removeOutOfUpperBound();
         enemyComposite.removeOutOfLowerBound();
         bonusDropper.removeBonusOutOfLowerBound();
+
         enemyComposite.processCollisionWithEnemy(shooter);
+        bonusDropper.processCollisionWithBonus(shooter);
     }
 
 

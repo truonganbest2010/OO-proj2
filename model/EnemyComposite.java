@@ -33,8 +33,7 @@ public class EnemyComposite extends GameElement implements Subject {
     public boolean movingToRight;
     private Random random = new Random();
 
-    private int totalEnemies = NROWS * NCOLS;
-    public int enemiesKilled = 0;
+    private int enemiesKilled = 0;
 
     public EnemyComposite() {
         rows = new ArrayList<>();
@@ -161,8 +160,6 @@ public class EnemyComposite extends GameElement implements Subject {
         }
     }
 
-   
-
     public void removeOutOfLowerBound() {
         var remove = new ArrayList<GameElement>();
         for (var b : bombs) {
@@ -180,9 +177,9 @@ public class EnemyComposite extends GameElement implements Subject {
             var removeEnemies = new ArrayList<GameElement>();
             for (var enemy: row) {
                 for (var bullet : shooter.getWeapons()) {
-                    if (enemy.collideWith(bullet)) {
+                    if (enemy.collideWith(bullet) && removeEnemies.size() < 1) {
                         removeEnemies.add(enemy);
-                        enemiesKilled+= removeEnemies.size();
+                        enemiesKilled++;
                         notifyObservers(EVENT.GOT_SHOT);
                         
                         /** Enemy explodes */ 
@@ -210,7 +207,7 @@ public class EnemyComposite extends GameElement implements Subject {
         }
 
 
-        if (enemiesKilled == totalEnemies) {
+        if (enemiesKilled == NROWS*NCOLS) {
             notifyObservers(EVENT.ALL_E_DESTROYED);
         }
 
@@ -234,16 +231,15 @@ public class EnemyComposite extends GameElement implements Subject {
         var removeComponents = new ArrayList<GameElement>();
         for (var component : shooter.getComponents()) {
             for (var b : bombs) {
-                if (component.collideWith(b)) {
-                    removeBombs.add(b);
-                    removeComponents.add(component);
-                    shooter.totalComponents--;
+                if (component.collideWith(b) && removeComponents.size() < 1) {
+                        removeComponents.add(component);
+                        removeBombs.add(b);
                 }
             }
         }
         shooter.getComponents().removeAll(removeComponents);
         bombs.removeAll(removeBombs);
-        if (shooter.totalComponents == 0) {
+        if (shooter.getComponents().size() == 0) {
             notifyObservers(EVENT.ALL_C_DESTROYED);
         }
 
@@ -253,7 +249,6 @@ public class EnemyComposite extends GameElement implements Subject {
                 for (var component : shooter.getComponents()) {
                     if (e.collideWith(component)) {
                         removeComponents.add(component);
-                        shooter.totalComponents--;
                     }
                 }
             }

@@ -18,14 +18,8 @@ public class EnemyObserver implements Observer {
 
     @Override
     public void enemiesGotShot() {
-        // TODO Auto-generated method stub
-        var enemyComposite = gameBoard.getEnemyComposite();
         // set score
-        int score;
-        int enemiesKilled;
-        enemiesKilled = enemyComposite.enemiesKilled;
-        score = enemiesKilled * TimerListener.SCORE_UP;
-        gameBoard.setScore(score);
+        gameBoard.setScore(gameBoard.getScore()+TimerListener.SCORE_UP);
     }
 
     @Override

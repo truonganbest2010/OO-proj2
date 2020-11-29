@@ -18,8 +18,6 @@ public class Shooter extends GameElement {
     private ArrayList<Lightning> lightningGun = new ArrayList<>();
     private ArrayList<GameElement> bottomLine = new ArrayList<>();
 
-    public int totalComponents;
-
     public Shooter(int x, int y) {
         super(x, y, 0, 0);
 
@@ -36,7 +34,6 @@ public class Shooter extends GameElement {
         components.add(s2);
         components.add(s3);
         components.add(s4);
-        totalComponents = components.size();
 
         bottomLine.add(new BottomLine(0, GameBoard.HEIGHT-EnemyComposite.ENEMY_SIZE/2, GameBoard.WIDTH, EnemyComposite.ENEMY_SIZE/2));
     }
@@ -62,6 +59,7 @@ public class Shooter extends GameElement {
     public boolean canFireLightning() {
         return lightningShoot > 0 && lightningGun.size() < 1;
     }
+
     public int getLightningShoot() {
         return lightningShoot;
     }
@@ -117,7 +115,7 @@ public class Shooter extends GameElement {
         g2.setColor(Color.white);
         g2.setFont(new Font("Courier", Font.BOLD, 10));
 
-        g2.drawString("" + totalComponents, 25, GameBoard.HEIGHT - 30);
+        g2.drawString("" + components.size(), 25, GameBoard.HEIGHT - 30);
         g2.drawImage(ImageStore.health_icon, null, 5, GameBoard.HEIGHT - 40);
         g2.drawString("" + lightningShoot, 25, GameBoard.HEIGHT - 10);
         g2.drawImage(ImageStore.lightning_icon, null, 5, GameBoard.HEIGHT - 20);

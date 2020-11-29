@@ -9,7 +9,6 @@ import java.awt.*;
 public class BonusLightning extends GameElement {
 
     public static final int WIDTH = 25;
-    public static final int UNIT_MOVE = 3;
 
     public BonusLightning(int x, int y) {
         super(x, y, WIDTH, WIDTH);
@@ -28,7 +27,7 @@ public class BonusLightning extends GameElement {
 
     @Override
     public void animate() {
-        super.y += UNIT_MOVE;
+        // bonus dropper
     }
     
 }

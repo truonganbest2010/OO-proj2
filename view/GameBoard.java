@@ -15,7 +15,7 @@ import javax.swing.*;
 public class GameBoard {
 
     public static final int WIDTH = 800;
-    public static final int HEIGHT = 800;
+    public static final int HEIGHT = 600;
     public static final int FPS = 40;
     public static final int DELAY = 1000/FPS;
     
@@ -64,7 +64,8 @@ public class GameBoard {
         southPanel.add(quitBtn);
         cp.add(BorderLayout.SOUTH, southPanel);
 
-        canvas.getGameElements().add(new StarDrop());
+        starDrop = new StarDrop();
+        canvas.getGameElements().add(starDrop);
         canvas.getGameElements().add(new TextDraw("Click <Start> to play", WIDTH/3 - 50, HEIGHT/2, Color.yellow, 30));
         
         timerListener = new TimerListener(this);
@@ -76,7 +77,7 @@ public class GameBoard {
             startBtn.setEnabled(false);
             shooter = new Shooter(GameBoard.WIDTH/2, GameBoard.HEIGHT-ShooterElement.SIZE);
             enemyComposite = new EnemyComposite();
-            starDrop = new StarDrop();
+            // starDrop = new StarDrop();
             bonusDropper = new BonusDropper(this);
             canvas.getGameElements().clear();
             canvas.getGameElements().add(starDrop);
