@@ -9,7 +9,7 @@ import model.bonusStrategyPattern.BonusBulletRenderAfterHitShooterStrategy;
 import model.bonusStrategyPattern.BonusFallForwardStrategy;
 import model.bonusStrategyPattern.BonusLightningRenderAfterHitShooterStrategy;
 import model.bonusStrategyPattern.BonusMoveStrategy;
-import model.bonusStrategyPattern.BonusRenderMoveForwardStrategy;
+import model.bonusStrategyPattern.BonusRenderFallForwardStrategy;
 import model.bonusStrategyPattern.BonusRenderStrategy;
 import view.GameBoard;
 
@@ -29,7 +29,7 @@ public class BonusDropper extends GameElement {
         this.gameBoard = gameBoard;
         bonusDropper = new ArrayList<>();
         moveStrategy = new BonusFallForwardStrategy(this);
-        renderStrategy = new BonusRenderMoveForwardStrategy(this);
+        renderStrategy = new BonusRenderFallForwardStrategy(this);
     }
 
     public void setMoveStrategy(BonusMoveStrategy moveStrategy) {
@@ -68,7 +68,7 @@ public class BonusDropper extends GameElement {
                 bonusDropper.add(new BonusBullet(x.nextInt(GameBoard.WIDTH-BonusLightning.WIDTH), 0));
             }    
             moveStrategy = new BonusFallForwardStrategy(this);
-            renderStrategy = new BonusRenderMoveForwardStrategy(this);
+            renderStrategy = new BonusRenderFallForwardStrategy(this);
         }
         
     }

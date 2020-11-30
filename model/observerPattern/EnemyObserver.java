@@ -43,7 +43,7 @@ public class EnemyObserver implements Observer {
     }
 
     @Override
-    public void enemiesDestroyedComponents() {
+    public void enemiesDestroyedShooter() {
         // TODO Auto-generated method stub
         gameBoard.setGameOver(true);
         // gameBoard.getCanvas().getGameElements().clear();

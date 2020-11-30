@@ -348,7 +348,7 @@ public class EnemyComposite extends GameElement implements Subject {
                 break;
             case ALL_C_DESTROYED:
                 for (var o: observers) {
-                    o.enemiesDestroyedComponents();
+                    o.enemiesDestroyedShooter();
                 }
         }
 

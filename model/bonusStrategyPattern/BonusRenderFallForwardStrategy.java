@@ -4,11 +4,11 @@ import java.awt.Graphics2D;
 
 import model.BonusDropper;
 
-public class BonusRenderMoveForwardStrategy implements BonusRenderStrategy {
+public class BonusRenderFallForwardStrategy implements BonusRenderStrategy {
 
     private BonusDropper bonusDropper;
 
-    public BonusRenderMoveForwardStrategy (BonusDropper bonusDropper) {
+    public BonusRenderFallForwardStrategy (BonusDropper bonusDropper) {
         this.bonusDropper = bonusDropper;
     }
 
