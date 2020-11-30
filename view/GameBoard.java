@@ -15,7 +15,7 @@ import javax.swing.*;
 public class GameBoard {
 
     public static final int WIDTH = 720;
-    public static final int HEIGHT = 1000;
+    public static final int HEIGHT = 960;
     public static final int FPS = 60;
     public static final int DELAY = 1000/FPS;
     

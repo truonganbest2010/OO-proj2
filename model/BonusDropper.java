@@ -44,19 +44,14 @@ public class BonusDropper extends GameElement {
 
     @Override
     public void render(Graphics2D g2) {    
-        // render bonus
-        // for (var bn : bonusDropper) {
-        //     bn.render(g2);
-        // }
+       
         this.renderStrategy.renderAlgorithm(g2);
 
     }
 
     @Override
     public void animate() {
-        // for (var bn: bonusDropper) {
-        //     bn.animate();
-        // }
+       
         this.moveStrategy.moveAlgorithm();
         
     }
@@ -68,7 +63,7 @@ public class BonusDropper extends GameElement {
         }
         moveStrategy = new BonusFallForwardStrategy(this);
         renderStrategy = new BonusRenderMoveForwardStrategy(this);
-        System.out.println(bonusDropper.size());
+        // System.out.println(bonusDropper.size());
     }
 
     public void removeBonusOutOfLowerBound() {
@@ -88,12 +83,11 @@ public class BonusDropper extends GameElement {
         for (var c: shooter.getComponents()) {
             for (var bn: bonusDropper) {
                 if (c.collideWith(bn) && removeBonus.size() < 1) {
-                    removeBonus.add(bn); 
+                    removeBonus.add(bn);
                     // System.out.println(removeBonus.size());
                     shooter.setlightningShoot(shooter.getLightningShoot() + BONUS_LIGHTNING);
                     setMoveStrategy(new BonusAfterHitShooterStrategy(this));
                     setRenderStrategy(new BonusRenderAfterHitShooterStrategy(this));
-                    gameBoard.getTimerListener().setBonus_frameCounter(0);
                 }
             }
         }

@@ -7,7 +7,7 @@ import view.GameBoard;
 public class BonusAfterHitShooterStrategy implements BonusMoveStrategy {
 
     private BonusDropper bonusDropper;
-    public static final int MAX_MOVE = 15;
+    public static final int MAX_MOVE = 20;
     private int count = 0;
 
 
@@ -23,9 +23,9 @@ public class BonusAfterHitShooterStrategy implements BonusMoveStrategy {
 
         if (count < MAX_MOVE) {
             for (var bn: bonusDropper.getBonusDropper()) {
-                bn.y -= 3;
+                bn.y -= 1;
             }
-            count++;
+            count+= 1;
         } else {
             for (var bn: bonusDropper.getBonusDropper()) {
                 bn.y += 1000;

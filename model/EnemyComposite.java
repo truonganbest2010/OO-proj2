@@ -8,6 +8,8 @@ import model.observerPattern.Observer;
 import model.observerPattern.Subject;
 import model.bulletStrategyPattern.BulletHitEnemyStrategy;
 import model.bulletStrategyPattern.BulletRenderHitEnemyStrategy;
+import model.gameStatePattern.GameState;
+import model.gameStatePattern.GameWave1;
 import model.images.ImageStore;
 import view.GameBoard;
 
@@ -34,17 +36,22 @@ public class EnemyComposite extends GameElement implements Subject {
     private Random random = new Random();
 
     private int enemiesKilled = 0;
+    private GameState state;
 
     public EnemyComposite() {
         rows = new ArrayList<>();
         bombs = new ArrayList<>();
-        
+
+        state = new GameWave1(this);
+    }
+
+    public void enemyFormation(int health) {
         /** Enemies Formation */
         for (int r = 0; r < NROWS; r++) {
             var oneRow = new ArrayList<GameElement>();
             rows.add(oneRow);
             for (int c = 0; c < NCOLS; c++) {
-                Enemy enemy = new Enemy(c * ENEMY_SIZE * 2, r * ENEMY_SIZE * 2 +20, ENEMY_SIZE, Color.yellow, true);
+                Enemy enemy = new Enemy(c * ENEMY_SIZE * 2, r * ENEMY_SIZE * 2 +20, ENEMY_SIZE, ENEMY_SIZE, health);
                 if (r%2 == 0) {
                     if (c%2 == 0) {
                         enemy.setImage(ImageStore.enemy_white);
@@ -57,8 +64,13 @@ public class EnemyComposite extends GameElement implements Subject {
                 oneRow.add(enemy);
             }
         }
+    }
 
-        
+    public void goNextState() {
+        state.nextState(this);
+    }
+    public void setState(GameState state) {
+        this.state = state;
     }
 
 
@@ -173,6 +185,7 @@ public class EnemyComposite extends GameElement implements Subject {
 
     public void processCollisionWithEnemy(Shooter shooter) {
         // bullet vs enemies
+        var removeRow = new ArrayList<>();
         for (var row: rows) {
             var removeEnemies = new ArrayList<GameElement>();
             for (var enemy: row) {
@@ -204,11 +217,17 @@ public class EnemyComposite extends GameElement implements Subject {
                 }
             }
             row.removeAll(removeEnemies);
+            if (row.size() == 0) {
+                removeRow.add(row);
+            }
         }
+        rows.removeAll(removeRow);
 
-
-        if (enemiesKilled == NROWS*NCOLS) {
-            notifyObservers(EVENT.ALL_E_DESTROYED);
+        System.out.println(rows.size());
+        if (rows.size() == 0) {  
+            if (state != null) {
+                goNextState();
+            } else notifyObservers(EVENT.ALL_E_DESTROYED);
         }
 
         // bullet vs bombs

@@ -4,20 +4,23 @@ import java.awt.*;
 
 public class Enemy extends GameElement {
 
-    public Enemy(int x, int y, int size, Color color, boolean filled) {
-        super(x, y, color, filled, size, size);
+    private int health;
+
+    public Enemy(int x, int y, int width, int height, int health) {
+        super(x, y, width, height);
+        this.health = health;
     }
 
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
 
     @Override
     public void render(Graphics2D g2) {
-        // g2.setColor(color);
-        // if (filled) {
-        //     g2.fillRect(x, y, width, height);
-        // }
-        // else {
-        //     g2.drawRect(x, y, width, height);
-        // }
 
         g2.drawImage(getImage(), null, x, y);
     }
