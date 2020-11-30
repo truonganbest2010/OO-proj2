@@ -24,7 +24,7 @@ public class TimerListener implements ActionListener {
     private LinkedList<EVENT_TYPE> eventQueue;
 
     private final int BOMB_DROP_FREQ = 50;
-    private final int BONUS_DROP_FREQ = 200;
+    private final int BONUS_DROP_FREQ = 150;
     private final int STAR_FALL_FREQ = 2;
 
     private int bomb_frameCounter = 0;
@@ -116,7 +116,7 @@ public class TimerListener implements ActionListener {
         var shooter = gameBoard.getShooter();
         var enemyComposite = gameBoard.getEnemyComposite();
         var bonusDropper = gameBoard.getBonusDropper();
-        
+
         shooter.removeOutOfUpperBound();
         enemyComposite.removeOutOfLowerBound();
         bonusDropper.removeBonusOutOfLowerBound();

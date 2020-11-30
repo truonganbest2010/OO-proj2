@@ -9,9 +9,9 @@ import view.GameBoard;
 public class Shooter extends GameElement {
 
     public static final int UNIT_MOVE = 10;
-    public static final int MAX_BULLETS = 5;
 
     private int lightningShoot = 1;
+    private int bulletShoot = 5;
 
     private ArrayList<GameElement> components = new ArrayList<>();
     private ArrayList<Bullet> weapons = new ArrayList<>();
@@ -53,9 +53,8 @@ public class Shooter extends GameElement {
     }
 
     public boolean canFireBullets() {
-        return weapons.size() < MAX_BULLETS;
+        return weapons.size() < bulletShoot;
     }
-
     public boolean canFireLightning() {
         return lightningShoot > 0 && lightningGun.size() < 1;
     }
@@ -63,9 +62,14 @@ public class Shooter extends GameElement {
     public int getLightningShoot() {
         return lightningShoot;
     }
-
     public void setlightningShoot(int lightningShoot) {
         this.lightningShoot = lightningShoot;
+    }
+    public int getBulletShoot() {
+        return bulletShoot;
+    }
+    public void setBulletShoot(int bulletShoot) {
+        this.bulletShoot = bulletShoot;
     }
 
     
@@ -115,7 +119,7 @@ public class Shooter extends GameElement {
         g2.setColor(Color.white);
         g2.setFont(new Font("Courier", Font.BOLD, 10));
 
-        g2.drawString("" + MAX_BULLETS, 25, GameBoard.HEIGHT - 50);
+        g2.drawString("" + bulletShoot, 25, GameBoard.HEIGHT - 50);
         g2.drawImage(ImageStore.bullet_icon, null, 5, GameBoard.HEIGHT - 70);
         g2.drawString("" + components.size(), 25, GameBoard.HEIGHT - 30);
         g2.drawImage(ImageStore.health_icon, null, 5, GameBoard.HEIGHT - 40);

@@ -14,7 +14,7 @@ public class BonusAfterHitShooterStrategy implements BonusMoveStrategy {
     public BonusAfterHitShooterStrategy(BonusDropper bonusDropper) {
         this.bonusDropper = bonusDropper;
         for (var bn: bonusDropper.getBonusDropper()) {
-            bn.y = GameBoard.HEIGHT - ShooterElement.SIZE*4;
+            bn.y = GameBoard.HEIGHT-ShooterElement.SIZE*4;
         }
     }
 

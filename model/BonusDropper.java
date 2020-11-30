@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import model.bonusStrategyPattern.BonusAfterHitShooterStrategy;
+import model.bonusStrategyPattern.BonusBulletRenderAfterHitShooterStrategy;
 import model.bonusStrategyPattern.BonusFallForwardStrategy;
+import model.bonusStrategyPattern.BonusLightningRenderAfterHitShooterStrategy;
 import model.bonusStrategyPattern.BonusMoveStrategy;
-import model.bonusStrategyPattern.BonusRenderAfterHitShooterStrategy;
 import model.bonusStrategyPattern.BonusRenderMoveForwardStrategy;
 import model.bonusStrategyPattern.BonusRenderStrategy;
 import view.GameBoard;
@@ -20,6 +21,8 @@ public class BonusDropper extends GameElement {
     private BonusRenderStrategy renderStrategy;
 
     public static final int BONUS_LIGHTNING = 1;
+    public static final int BONUS_BULLET = 1;
+
     public static final int UNIT_MOVE = 3;
 
     public BonusDropper(GameBoard gameBoard) {
@@ -59,11 +62,15 @@ public class BonusDropper extends GameElement {
     public void dropBonus() {
         if (bonusDropper.size() < 1) {
             Random x = new Random();
-            bonusDropper.add(new BonusLightning(x.nextInt(GameBoard.WIDTH-BonusLightning.WIDTH), 0));
+            if (x.nextInt(2) == 1)
+                bonusDropper.add(new BonusLightning(x.nextInt(GameBoard.WIDTH-BonusLightning.WIDTH), 0));
+            else {
+                bonusDropper.add(new BonusBullet(x.nextInt(GameBoard.WIDTH-BonusLightning.WIDTH), 0));
+            }    
+            moveStrategy = new BonusFallForwardStrategy(this);
+            renderStrategy = new BonusRenderMoveForwardStrategy(this);
         }
-        moveStrategy = new BonusFallForwardStrategy(this);
-        renderStrategy = new BonusRenderMoveForwardStrategy(this);
-        // System.out.println(bonusDropper.size());
+        
     }
 
     public void removeBonusOutOfLowerBound() {
@@ -80,21 +87,32 @@ public class BonusDropper extends GameElement {
     public void processCollisionWithBonus(Shooter shooter) {
         var removeBonus = new ArrayList<>();
         /** component - bonus */
+        removeBonus.clear();
         for (var c: shooter.getComponents()) {
             for (var bn: bonusDropper) {
                 if (c.collideWith(bn) && removeBonus.size() < 1) {
+                    /** bonus lightning */
+                    removeBonus.add(bn);
+                    
                     if (bn instanceof BonusLightning) {
-                        removeBonus.add(bn);
                         // System.out.println(removeBonus.size());
                         shooter.setlightningShoot(shooter.getLightningShoot() + BONUS_LIGHTNING);
+                        setRenderStrategy(new BonusLightningRenderAfterHitShooterStrategy(this));
                         setMoveStrategy(new BonusAfterHitShooterStrategy(this));
-                        setRenderStrategy(new BonusRenderAfterHitShooterStrategy(this));
+                    }
+
+                    else if (bn instanceof BonusBullet) {
+                        // System.out.println(removeBonus.size());
+                        shooter.setBulletShoot(shooter.getBulletShoot() + BONUS_BULLET);
+                        setRenderStrategy(new BonusBulletRenderAfterHitShooterStrategy(this));
+                        setMoveStrategy(new BonusAfterHitShooterStrategy(this));
                     }
                     
                 }
+            
             }
+            // removeBonus.clear();
         }
-        removeBonus.clear();
 
 
     }

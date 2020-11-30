@@ -21,7 +21,7 @@ public class BonusLightning extends GameElement {
         // g2.setColor(Color.BLUE);
         // g2.fillOval(x, y, width, height);
         if (y%2 == 0)
-            g2.drawImage(ImageStore.bonus, null, x, y);
+            g2.drawImage(ImageStore.bonus_lightning, null, x, y);
              
     }
 

@@ -7,11 +7,11 @@ import java.awt.Graphics2D;
 import model.BonusDropper;
 import model.images.ImageStore;
 
-public class BonusRenderAfterHitShooterStrategy implements BonusRenderStrategy {
+public class BonusLightningRenderAfterHitShooterStrategy implements BonusRenderStrategy {
 
     private BonusDropper bonusDropper;
 
-    public BonusRenderAfterHitShooterStrategy (BonusDropper bonusDropper) {
+    public BonusLightningRenderAfterHitShooterStrategy (BonusDropper bonusDropper) {
         this.bonusDropper = bonusDropper;
     }
 

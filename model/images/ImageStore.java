@@ -6,6 +6,7 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 import model.Bomb;
+import model.BonusBullet;
 import model.BonusLightning;
 import model.Bullet;
 import model.EnemyComposite;
@@ -24,7 +25,7 @@ public class ImageStore {
     public static BufferedImage bomb;
     public static BufferedImage lightning;
 
-    public static BufferedImage bonus;
+    public static BufferedImage bonus_lightning, bonus_bullet;
 
     // Icon
     public static BufferedImage health_icon, lightning_icon, target_icon, bullet_icon;
@@ -37,7 +38,8 @@ public class ImageStore {
         bullet = readImage("model/images/bullet.png", Bullet.WIDTH, Bullet.WIDTH);
         bomb = readImage("model/images/bomb.png", Bomb.SIZE, Bomb.SIZE*2);
 
-        bonus = readImage("model/images/bonus.png", BonusLightning.WIDTH, BonusLightning.WIDTH);
+        bonus_lightning = readImage("model/images/bonus/bonus_lightning.png", BonusLightning.WIDTH, BonusLightning.WIDTH);
+        bonus_bullet = readImage("model/images/bonus/bonus_bullet.png", BonusBullet.WIDTH, BonusBullet.WIDTH);
 
         explode = readImage("model/images/explode.png", 25, 25);
         e1 = readImage("model/images/explosion/e1.png", 25, 25);
