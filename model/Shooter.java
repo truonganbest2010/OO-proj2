@@ -115,6 +115,8 @@ public class Shooter extends GameElement {
         g2.setColor(Color.white);
         g2.setFont(new Font("Courier", Font.BOLD, 10));
 
+        g2.drawString("" + MAX_BULLETS, 25, GameBoard.HEIGHT - 50);
+        g2.drawImage(ImageStore.bullet_icon, null, 5, GameBoard.HEIGHT - 70);
         g2.drawString("" + components.size(), 25, GameBoard.HEIGHT - 30);
         g2.drawImage(ImageStore.health_icon, null, 5, GameBoard.HEIGHT - 40);
         g2.drawString("" + lightningShoot, 25, GameBoard.HEIGHT - 10);

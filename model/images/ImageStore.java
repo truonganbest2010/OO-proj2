@@ -27,7 +27,7 @@ public class ImageStore {
     public static BufferedImage bonus;
 
     // Icon
-    public static BufferedImage health_icon, lightning_icon, target_icon;
+    public static BufferedImage health_icon, lightning_icon, target_icon, bullet_icon;
 
 
     static {
@@ -51,6 +51,7 @@ public class ImageStore {
         lightning_icon = readImage("model/images/icon/lightning_icon.png", 15, 15);
         health_icon = readImage("model/images/icon/health_icon.png", 15, 15);
         target_icon = readImage("model/images/icon/target_icon.png", 15, 15);
+        bullet_icon = readImage("model/images/icon/bullet_icon.png", 12, 18);
 
         sc1 = readImage("model/images/components/sc1.png", 20, 20);
         sc2 = readImage("model/images/components/sc2.png", 20, 20);

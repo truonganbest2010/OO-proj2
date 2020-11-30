@@ -90,6 +90,7 @@ public class BonusDropper extends GameElement {
                         setMoveStrategy(new BonusAfterHitShooterStrategy(this));
                         setRenderStrategy(new BonusRenderAfterHitShooterStrategy(this));
                     }
+                    
                 }
             }
         }
