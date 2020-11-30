@@ -22,6 +22,10 @@ public class StarDrop extends GameElement {
         }
     }
 
+    public ArrayList<GameElement> getStarsBackground() {
+        return starsBackground;
+    }
+
     @Override
     public void render(Graphics2D g2) {
         // TODO Auto-generated method stub

@@ -8,6 +8,8 @@ public class TextDraw extends GameElement {
 
     private String text;
     private int size;
+    private static final int MAX_ANIMATION = GameBoard.HEIGHT;
+    private int count = 0;
 
     public TextDraw(String text, int x, int y, Color color, int size) {
         super(x, y, color, false, 0, 0);
@@ -26,6 +28,12 @@ public class TextDraw extends GameElement {
     @Override
     public void animate() {
         // TODO Auto-generated method stub
+        if (count < MAX_ANIMATION) {
+            y += 2;
+            count+= 2;
+        } else  {
+            y = +9000;
+        }
 
     }
     

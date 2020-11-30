@@ -66,7 +66,7 @@ public class GameBoard {
 
         starDrop = new StarDrop();
         canvas.getGameElements().add(starDrop);
-        canvas.getGameElements().add(new TextDraw("Click <Start> to play", WIDTH/3 - 50, HEIGHT/2, Color.yellow, 30));
+        canvas.getGameElements().add(new TextDraw("Click <Start> to Play", WIDTH/3 - 50, HEIGHT/2, Color.yellow, 30));
         
         timerListener = new TimerListener(this);
         timer = new Timer(DELAY, timerListener);

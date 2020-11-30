@@ -15,7 +15,7 @@ import view.GameBoard;
 
 public class EnemyComposite extends GameElement implements Subject {
 
-    public static final int NROWS = 5;
+    public static final int NROWS = 3;
     public static final int NCOLS = 12;
     public static final int ENEMY_SIZE = 25;
     public static final int UNIT_MOVE = 2;
@@ -31,6 +31,7 @@ public class EnemyComposite extends GameElement implements Subject {
 
     private ArrayList<ArrayList<Enemy>> rows;
     private ArrayList<GameElement> bombs;
+    private ArrayList<GameElement> text;
 
     public boolean movingToRight;
     private Random random = new Random();
@@ -41,6 +42,7 @@ public class EnemyComposite extends GameElement implements Subject {
     public EnemyComposite() {
         rows = new ArrayList<>();
         bombs = new ArrayList<>();
+        text = new ArrayList<>();
 
         state = new GameWave1(this);
     }
@@ -73,6 +75,10 @@ public class EnemyComposite extends GameElement implements Subject {
         this.state = state;
     }
 
+    public ArrayList<GameElement> getText() {
+        return text;
+    }
+
 
     @Override
     public void render(Graphics2D g2) {
@@ -87,6 +93,11 @@ public class EnemyComposite extends GameElement implements Subject {
         // render enemy bombs
         for (var b : bombs) {
             b.render(g2);
+        }
+
+        // render Text
+        for (var t: text) {
+            t.render(g2);
         }
 
 
@@ -124,6 +135,10 @@ public class EnemyComposite extends GameElement implements Subject {
         // animate bombs
         for (var b : bombs) {
             b.animate();
+        }
+        // animate text
+        for (var t: text) {
+            t.animate();
         }
 
     }
@@ -180,6 +195,17 @@ public class EnemyComposite extends GameElement implements Subject {
             }
         }
         bombs.removeAll(remove);
+        
+    }
+
+    public void removeTextOutOfBound() {
+        var remove = new ArrayList<GameElement>();
+        for (var t : text) {
+            if (t.y >= GameBoard.HEIGHT) {
+                remove.add(t);
+            }
+        }
+        text.removeAll(remove);
     }
 
 

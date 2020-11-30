@@ -9,6 +9,7 @@ import model.*;
 import model.Shooter;
 import model.bulletStrategyPattern.*;
 import view.GameBoard;
+import view.TextDraw;
 import model.images.ImageStore;
 
 
@@ -49,13 +50,16 @@ public class TimerListener implements ActionListener {
     
         } else {
             update();
+            gameBoard.getEnemyComposite().removeTextOutOfBound();
             gameBoard.getStartBtn().setText("New Game");
             gameBoard.getPauseBtn().setEnabled(false);
             gameBoard.getStartBtn().setEnabled(true);
             // gameBoard.getTimer().stop();
             bomb_frameCounter = 0;
             bonus_frameCounter = 0;
-
+            if (gameBoard.getEnemyComposite().getText().size() < 1) {
+                gameBoard.getEnemyComposite().getText().add(new TextDraw("Click <New Game> to Start", GameBoard.WIDTH/4 - 50, 0, Color.white, 30));
+            }
         }
 
         if (star_frameCounter == STAR_FALL_FREQ) {
