@@ -2,21 +2,34 @@ package model;
 
 import java.awt.*;
 
-import model.images.ImageStore;
+import model.bombStrategyPattern.BombFallForwardStrategy;
+import model.bombStrategyPattern.BombMoveStrategy;
+import model.bombStrategyPattern.BombRenderFallForwardStrategy;
+import model.bombStrategyPattern.BombRenderStrategy;
 
 public class Bomb extends GameElement {
 
     public static final int SIZE = 12;
     public static final int UNIT_MOVE = 5;
+    private BombMoveStrategy moveStrategy;
+    private BombRenderStrategy renderStrategy;
 
     public Bomb(int x, int y) {
         super(x, y, Color.green, true, SIZE, SIZE*2);
+        moveStrategy = new BombFallForwardStrategy(this);
+        renderStrategy = new BombRenderFallForwardStrategy(this);
+    }
+
+    public void setMoveStrategy(BombMoveStrategy moveStrategy) {
+        this.moveStrategy = moveStrategy;
+    }
+    public void setRenderStrategy(BombRenderStrategy renderStrategy) {
+        this.renderStrategy = renderStrategy;
     }
 
 
     @Override
     public void render(Graphics2D g2) {
-        // TODO Auto-generated method stub
         // g2.setColor(color);
         // if (filled) {
         //     g2.fillOval(x, y, width, height);
@@ -24,13 +37,13 @@ public class Bomb extends GameElement {
         // else  {
         //     g2.drawOval(x, y, width, height);
         // }
-        g2.drawImage(ImageStore.bomb, null, x, y);
+        renderStrategy.renderAlgorithm(g2);
     }
 
     @Override
     public void animate() {
-        // TODO Auto-generated method stub
-        super.y += UNIT_MOVE;
+        // super.y += UNIT_MOVE;
+        moveStrategy.moveAlgorithm();
     }
     
 }

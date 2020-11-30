@@ -6,6 +6,8 @@ import java.util.Random;
 
 import model.observerPattern.Observer;
 import model.observerPattern.Subject;
+import model.bombStrategyPattern.BombHitShooterStrategy;
+import model.bombStrategyPattern.BombRenderHitShooterStrategy;
 import model.bulletStrategyPattern.BulletHitEnemyStrategy;
 import model.bulletStrategyPattern.BulletRenderHitEnemyStrategy;
 import model.gameStatePattern.GameState;
@@ -30,7 +32,7 @@ public class EnemyComposite extends GameElement implements Subject {
     private ArrayList<Observer> observers = new ArrayList<>();
 
     private ArrayList<ArrayList<Enemy>> rows;
-    private ArrayList<GameElement> bombs;
+    private ArrayList<Bomb> bombs;
     private ArrayList<GameElement> text;
 
     public boolean movingToRight;
@@ -201,7 +203,7 @@ public class EnemyComposite extends GameElement implements Subject {
     public void removeTextOutOfBound() {
         var remove = new ArrayList<GameElement>();
         for (var t : text) {
-            if (t.y >= GameBoard.HEIGHT) {
+            if (t.y >= GameBoard.HEIGHT+100) {
                 remove.add(t);
             }
         }
@@ -221,13 +223,11 @@ public class EnemyComposite extends GameElement implements Subject {
                         if (enemy.getHealth() > 1) {
                             enemy.setHealth(enemy.getHealth()-1);
                             removeBullet.add(bullet);
-                            
                         }
                         else {
                             removeEnemies.add(enemy);
                             enemiesKilled++;
                             notifyObservers(EVENT.GOT_SHOT);
-                        
                             /** Enemy explodes */ 
                             BulletHitEnemyStrategy bhes = new BulletHitEnemyStrategy(bullet);
                             bhes.setMoveRight(movingToRight);
@@ -270,7 +270,7 @@ public class EnemyComposite extends GameElement implements Subject {
         var removeBombs = new ArrayList<GameElement>();
         for (var b : bombs) {
             for (var bullet : shooter.getWeapons()) {
-                if (b.collideWith(bullet)) {
+                if (b.collideWith(bullet) && removeBombs.size() < 1) {
                     removeBombs.add(b);
                     /** Bomb explodes */
                     BulletHitEnemyStrategy bhes = new BulletHitEnemyStrategy(bullet);
@@ -287,13 +287,16 @@ public class EnemyComposite extends GameElement implements Subject {
         for (var component : shooter.getComponents()) {
             for (var b : bombs) {
                 if (component.collideWith(b) && removeComponents.size() < 1) {
-                        removeComponents.add(component);
-                        removeBombs.add(b);
+                    removeComponents.add(component);
+                    shooter.setBulletShoot(shooter.getBulletShoot()-1);
+                    b.setMoveStrategy(new BombHitShooterStrategy(b));
+                    b.setRenderStrategy(new BombRenderHitShooterStrategy(b));
                 }
             }
         }
         shooter.getComponents().removeAll(removeComponents);
-        bombs.removeAll(removeBombs);
+        removeBombs.clear();
+
         if (shooter.getComponents().size() == 0) {
             notifyObservers(EVENT.ALL_C_DESTROYED);
         }

@@ -12,7 +12,7 @@ public class GameWave2 implements GameState {
     public GameWave2 (EnemyComposite enemyComposite) {
         this.enemyComposite = enemyComposite;
         enemyComposite.enemyFormation(2);
-        enemyComposite.getText().add(new TextDraw("Second   Wave", GameBoard.WIDTH/3, 0, Color.LIGHT_GRAY, 30));
+        enemyComposite.getText().add(new TextDraw("Second   Wave", GameBoard.WIDTH/3, -100, Color.LIGHT_GRAY, 30));
 
     }
 

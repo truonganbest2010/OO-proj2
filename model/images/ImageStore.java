@@ -36,7 +36,7 @@ public class ImageStore {
         enemy_yellow = readImage("model/images/enemy/enemy_yellow.png", EnemyComposite.ENEMY_SIZE, EnemyComposite.ENEMY_SIZE);
 
         bullet = readImage("model/images/bullet.png", Bullet.WIDTH, Bullet.WIDTH);
-        bomb = readImage("model/images/bomb.png", Bomb.SIZE, Bomb.SIZE*2);
+        bomb = readImage("model/images/bomb.png", Bomb.SIZE+3, Bomb.SIZE*2+3);
 
         bonus_lightning = readImage("model/images/bonus/bonus_lightning.png", BonusLightning.WIDTH, BonusLightning.WIDTH);
         bonus_bullet = readImage("model/images/bonus/bonus_bullet.png", BonusBullet.WIDTH, BonusBullet.WIDTH);

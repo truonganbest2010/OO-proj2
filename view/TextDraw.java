@@ -28,12 +28,10 @@ public class TextDraw extends GameElement {
     @Override
     public void animate() {
         // TODO Auto-generated method stub
-        if (count < MAX_ANIMATION) {
+        // if (count < MAX_ANIMATION) {
             y += 2;
-            count+= 2;
-        } else  {
-            y = +9000;
-        }
+            // count+= 2;
+        // }
 
     }
     
