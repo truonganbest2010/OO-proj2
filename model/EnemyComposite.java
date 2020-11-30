@@ -23,7 +23,7 @@ public class EnemyComposite extends GameElement implements Subject {
     public static final int UNIT_MOVE = 2;
 
     public enum EVENT {
-        GOT_SHOT, REACH_BOTTOM, ALL_E_DESTROYED, ALL_C_DESTROYED
+        GOT_SHOT, REACH_BOTTOM, GOT_ALL_DESTROYED, DESTROYED_SHOOTER
     }
 
     /** proj2 implementation */
@@ -263,7 +263,7 @@ public class EnemyComposite extends GameElement implements Subject {
         if (rows.size() == 0) {  
             if (state != null) {
                 goNextState();
-            } else notifyObservers(EVENT.ALL_E_DESTROYED);
+            } else notifyObservers(EVENT.GOT_ALL_DESTROYED);
         }
 
         // bullet vs bombs
@@ -298,7 +298,7 @@ public class EnemyComposite extends GameElement implements Subject {
         removeBombs.clear();
 
         if (shooter.getComponents().size() == 0) {
-            notifyObservers(EVENT.ALL_C_DESTROYED);
+            notifyObservers(EVENT.DESTROYED_SHOOTER);
         }
 
         // enemies vs components
@@ -341,12 +341,12 @@ public class EnemyComposite extends GameElement implements Subject {
                     o.enemiesReachBottom();
                 }
                 break;
-            case ALL_E_DESTROYED:
+            case GOT_ALL_DESTROYED:
                 for (var o: observers) {
                     o.enemiesAllGone();
                 }
                 break;
-            case ALL_C_DESTROYED:
+            case DESTROYED_SHOOTER:
                 for (var o: observers) {
                     o.enemiesDestroyedShooter();
                 }
