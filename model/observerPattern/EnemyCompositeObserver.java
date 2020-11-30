@@ -7,11 +7,11 @@ import view.GameBoard;
 import view.GameOverDraw;
 import view.TextDraw;
 
-public class EnemyObserver implements Observer {
+public class EnemyCompositeObserver implements Observer {
 
     private GameBoard gameBoard;
 
-    public EnemyObserver(GameBoard gameBoard) {
+    public EnemyCompositeObserver(GameBoard gameBoard) {
         this.gameBoard = gameBoard;
     }
 

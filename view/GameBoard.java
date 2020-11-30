@@ -7,7 +7,7 @@ import model.EnemyComposite;
 import model.Shooter;
 import model.ShooterElement;
 import model.StarDrop;
-import model.observerPattern.EnemyObserver;
+import model.observerPattern.EnemyCompositeObserver;
 
 import java.awt.*;
 import javax.swing.*;
@@ -88,7 +88,7 @@ public class GameBoard {
             timerListener.getEventQueue().clear();
             timer.start();
 
-            EnemyObserver observer = new EnemyObserver(this);
+            EnemyCompositeObserver observer = new EnemyCompositeObserver(this);
             enemyComposite.addEnemyListener(observer);
 
             if (!startBtn.isEnabled()) {
