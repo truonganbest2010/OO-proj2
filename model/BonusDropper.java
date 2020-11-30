@@ -83,11 +83,13 @@ public class BonusDropper extends GameElement {
         for (var c: shooter.getComponents()) {
             for (var bn: bonusDropper) {
                 if (c.collideWith(bn) && removeBonus.size() < 1) {
-                    removeBonus.add(bn);
-                    // System.out.println(removeBonus.size());
-                    shooter.setlightningShoot(shooter.getLightningShoot() + BONUS_LIGHTNING);
-                    setMoveStrategy(new BonusAfterHitShooterStrategy(this));
-                    setRenderStrategy(new BonusRenderAfterHitShooterStrategy(this));
+                    if (bn instanceof BonusLightning) {
+                        removeBonus.add(bn);
+                        // System.out.println(removeBonus.size());
+                        shooter.setlightningShoot(shooter.getLightningShoot() + BONUS_LIGHTNING);
+                        setMoveStrategy(new BonusAfterHitShooterStrategy(this));
+                        setRenderStrategy(new BonusRenderAfterHitShooterStrategy(this));
+                    }
                 }
             }
         }

@@ -29,7 +29,7 @@ public class EnemyComposite extends GameElement implements Subject {
 
     private ArrayList<Observer> observers = new ArrayList<>();
 
-    private ArrayList<ArrayList<GameElement>> rows;
+    private ArrayList<ArrayList<Enemy>> rows;
     private ArrayList<GameElement> bombs;
 
     public boolean movingToRight;
@@ -48,7 +48,7 @@ public class EnemyComposite extends GameElement implements Subject {
     public void enemyFormation(int health) {
         /** Enemies Formation */
         for (int r = 0; r < NROWS; r++) {
-            var oneRow = new ArrayList<GameElement>();
+            var oneRow = new ArrayList<Enemy>();
             rows.add(oneRow);
             for (int c = 0; c < NCOLS; c++) {
                 Enemy enemy = new Enemy(c * ENEMY_SIZE * 2, r * ENEMY_SIZE * 2 +20, ENEMY_SIZE, ENEMY_SIZE, health);
@@ -186,20 +186,28 @@ public class EnemyComposite extends GameElement implements Subject {
     public void processCollisionWithEnemy(Shooter shooter) {
         // bullet vs enemies
         var removeRow = new ArrayList<>();
+        var removeBullet = new ArrayList<>();
         for (var row: rows) {
             var removeEnemies = new ArrayList<GameElement>();
             for (var enemy: row) {
-                for (var bullet : shooter.getWeapons()) {
+                for (var bullet: shooter.getWeapons()) {
                     if (enemy.collideWith(bullet) && removeEnemies.size() < 1) {
-                        removeEnemies.add(enemy);
-                        enemiesKilled++;
-                        notifyObservers(EVENT.GOT_SHOT);
+                        if (enemy.getHealth() > 1) {
+                            enemy.setHealth(enemy.getHealth()-1);
+                            removeBullet.add(bullet);
+                            
+                        }
+                        else {
+                            removeEnemies.add(enemy);
+                            enemiesKilled++;
+                            notifyObservers(EVENT.GOT_SHOT);
                         
-                        /** Enemy explodes */ 
-                        BulletHitEnemyStrategy bhes = new BulletHitEnemyStrategy(bullet);
-                        bhes.setMoveRight(movingToRight);
-                        bullet.setMoveStrategy(bhes);
-                        bullet.setRenderStrategy(new BulletRenderHitEnemyStrategy(bullet));
+                            /** Enemy explodes */ 
+                            BulletHitEnemyStrategy bhes = new BulletHitEnemyStrategy(bullet);
+                            bhes.setMoveRight(movingToRight);
+                            bullet.setMoveStrategy(bhes);
+                            bullet.setRenderStrategy(new BulletRenderHitEnemyStrategy(bullet));
+                        }
                     }
                 }
 
@@ -216,6 +224,8 @@ public class EnemyComposite extends GameElement implements Subject {
                     notifyObservers(EVENT.REACH_BOTTOM);
                 }
             }
+            shooter.getWeapons().removeAll(removeBullet);
+
             row.removeAll(removeEnemies);
             if (row.size() == 0) {
                 removeRow.add(row);
@@ -223,7 +233,7 @@ public class EnemyComposite extends GameElement implements Subject {
         }
         rows.removeAll(removeRow);
 
-        System.out.println(rows.size());
+        // System.out.println(rows.size());
         if (rows.size() == 0) {  
             if (state != null) {
                 goNextState();
