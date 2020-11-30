@@ -9,7 +9,7 @@ import view.GameBoard;
 public class StarDrop extends GameElement {
 
     public static final int UNIT_MOVE = 2;
-    public static final int ASTEROID_SIZE_RANGE = 8;
+    public static final int STAR_SIZE_RANGE = 8;
     private ArrayList<GameElement> starsBackground;
 
     public StarDrop() {
@@ -17,7 +17,7 @@ public class StarDrop extends GameElement {
 
         for (int i = 1; i < GameBoard.HEIGHT; i+= 2) {
             Random r = new Random();
-            int size = r.nextInt(ASTEROID_SIZE_RANGE);
+            int size = r.nextInt(STAR_SIZE_RANGE);
             starsBackground.add(new Star(r.nextInt(GameBoard.WIDTH-1), i, size, size));
         }
     }
@@ -44,8 +44,7 @@ public class StarDrop extends GameElement {
     
     public void dropStars() {
         Random x = new Random();
-        Random r = new Random();
-        int size = r.nextInt(ASTEROID_SIZE_RANGE);
+        int size = x.nextInt(STAR_SIZE_RANGE);
         starsBackground.add(new Star(x.nextInt(GameBoard.WIDTH-1), 0, size, size));
     }
 
