@@ -1,4 +1,4 @@
-package model.observerPattern;
+package model.enemyCompositeObserverPattern;
 
 public interface Observer {
     

@@ -4,8 +4,8 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-import model.observerPattern.Observer;
-import model.observerPattern.Subject;
+import model.enemyCompositeObserverPattern.Observer;
+import model.enemyCompositeObserverPattern.Subject;
 import model.bombStrategyPattern.BombHitShooterStrategy;
 import model.bombStrategyPattern.BombRenderHitShooterStrategy;
 import model.bulletStrategyPattern.BulletHitEnemyStrategy;

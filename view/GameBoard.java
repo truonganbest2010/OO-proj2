@@ -7,7 +7,7 @@ import model.EnemyComposite;
 import model.Shooter;
 import model.ShooterElement;
 import model.StarDrop;
-import model.observerPattern.EnemyCompositeObserver;
+import model.enemyCompositeObserverPattern.EnemyCompositeObserver;
 
 import java.awt.*;
 import javax.swing.*;

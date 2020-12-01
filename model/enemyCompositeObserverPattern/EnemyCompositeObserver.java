@@ -1,4 +1,4 @@
-package model.observerPattern;
+package model.enemyCompositeObserverPattern;
 
 import java.awt.Color;
 
