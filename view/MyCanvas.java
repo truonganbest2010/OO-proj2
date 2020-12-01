@@ -33,6 +33,18 @@ public class MyCanvas extends JPanel {
         return gameElements;
     }
 
+    public void removeObjectOutOfLowerBound() {
+        var remove = new ArrayList<>();
+        for (var e: gameElements) {
+            if (e.y > GameBoard.HEIGHT+50) {
+                remove.add(e);
+            }
+        }
+        gameElements.removeAll(remove);
+
+        // System.out.println(gameElements.size());
+    }
+
 
     
 }

@@ -13,7 +13,7 @@ public class EnemiesFinalWave implements EnemyCompositeState {
 
     public EnemiesFinalWave(EnemyComposite enemyComposite) {
         enemyComposite.enemyFormation(3, NROWS, NCOLS);
-        enemyComposite.getText().add(new TextDraw("Final   Wave", GameBoard.WIDTH/3, -100, Color.LIGHT_GRAY, 30));
+        enemyComposite.getText().add(new TextDraw("Final   Wave", GameBoard.WIDTH*2/5, -300, Color.LIGHT_GRAY, 30));
 
     }
 

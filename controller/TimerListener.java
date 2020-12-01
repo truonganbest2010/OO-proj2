@@ -42,7 +42,7 @@ public class TimerListener implements ActionListener {
         ++bomb_frameCounter;
         ++bonus_frameCounter;
         ++star_frameCounter;
-        // System.out.println(frameCounter);
+        
         if (!gameBoard.isGameOver()) {
             update();
             processEventQueue();
@@ -56,16 +56,12 @@ public class TimerListener implements ActionListener {
             bomb_frameCounter = 0;
             bonus_frameCounter = 0;
             if (gameBoard.getEnemyComposite().getText().size() < 1) {
-                gameBoard.getEnemyComposite().getText().add(new TextDraw("Click <New Game> to Start", GameBoard.WIDTH/4 - 50, 0, Color.white, 30));
+                gameBoard.getEnemyComposite().getText().add(new TextDraw("Click <New Game> to Start", GameBoard.WIDTH/3 -50, 0, Color.white, 30));
             }
             // gameBoard.getTimer().stop();
         }
 
-        if (star_frameCounter == STAR_FALL_FREQ) {
-            gameBoard.getStarDrop().dropStars();
-            star_frameCounter = 0;
-        }
-        
+        starDrop();
         removeObjectOutOfBound();
         gameBoard.getCanvas().repaint();
     }
@@ -116,11 +112,17 @@ public class TimerListener implements ActionListener {
         
     }
 
+    private void starDrop() {
+        if (star_frameCounter == STAR_FALL_FREQ) {
+            gameBoard.getStarDrop().dropStars();
+            star_frameCounter = 0;
+        }
+    }
+
     private void processCollision() {
         var shooter = gameBoard.getShooter();
         var enemyComposite = gameBoard.getEnemyComposite();
         var bonusDropper = gameBoard.getBonusDropper();
-
         enemyComposite.processCollisionWithEnemy(shooter);
         bonusDropper.processCollisionWithBonus(shooter);
     }
@@ -131,6 +133,7 @@ public class TimerListener implements ActionListener {
         gameBoard.getEnemyComposite().removeOutOfLowerBound();
         gameBoard.getBonusDropper().removeBonusOutOfLowerBound();
         gameBoard.getStarDrop().removeStarsOutOfBound();
+        gameBoard.getCanvas().removeObjectOutOfLowerBound();
     }
 
 

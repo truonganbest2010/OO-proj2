@@ -19,7 +19,7 @@ public class ImageStore {
     // Shooter Components
     public static BufferedImage sc1, sc2, sc3, sc4; 
     // Explosion Animation
-    public static BufferedImage explode, e1, e2, e3, e4, e5; 
+    public static BufferedImage e1, e2, e3, e4, e5; 
 
     public static BufferedImage bullet;
     public static BufferedImage bomb;
@@ -41,7 +41,6 @@ public class ImageStore {
         bonus_lightning = readImage("model/images/bonus/bonus_lightning.png", BonusLightning.WIDTH, BonusLightning.WIDTH);
         bonus_bullet = readImage("model/images/bonus/bonus_bullet.png", BonusBullet.WIDTH, BonusBullet.WIDTH);
 
-        explode = readImage("model/images/explode.png", 25, 25);
         e1 = readImage("model/images/explosion/e1.png", 25, 25);
         e2 = readImage("model/images/explosion/e2.png", 25, 25);
         e3 = readImage("model/images/explosion/e3.png", 25, 25);
@@ -53,7 +52,7 @@ public class ImageStore {
         lightning_icon = readImage("model/images/icon/lightning_icon.png", 15, 15);
         health_icon = readImage("model/images/icon/health_icon.png", 15, 15);
         target_icon = readImage("model/images/icon/target_icon.png", 15, 15);
-        bullet_icon = readImage("model/images/icon/bullet_icon.png", 12, 18);
+        bullet_icon = readImage("model/images/icon/bullet_icon.png", 12, 16);
 
         sc1 = readImage("model/images/components/sc1.png", 20, 20);
         sc2 = readImage("model/images/components/sc2.png", 20, 20);

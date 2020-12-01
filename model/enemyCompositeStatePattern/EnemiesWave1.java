@@ -16,7 +16,7 @@ public class EnemiesWave1 implements EnemyCompositeState {
     public EnemiesWave1(EnemyComposite enemyComposite) {
         this.enemyComposite = enemyComposite;
         enemyComposite.enemyFormation(1, NROWS, NCOLS);
-        enemyComposite.getText().add(new TextDraw("First   Wave", GameBoard.WIDTH/3, -100, Color.LIGHT_GRAY, 30));
+        enemyComposite.getText().add(new TextDraw("First  Wave", GameBoard.WIDTH*2/5, -300, Color.LIGHT_GRAY, 30));
     }
 
     @Override

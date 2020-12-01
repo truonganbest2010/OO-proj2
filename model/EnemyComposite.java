@@ -53,7 +53,7 @@ public class EnemyComposite extends GameElement implements Subject {
             var oneRow = new ArrayList<Enemy>();
             rows.add(oneRow);
             for (int c = 0; c < ncols; c++) {
-                Enemy enemy = new Enemy(c * ENEMY_SIZE * 2, r * ENEMY_SIZE * 2 -500, ENEMY_SIZE, ENEMY_SIZE, health);
+                Enemy enemy = new Enemy(c * ENEMY_SIZE * 2, r * ENEMY_SIZE * 2 -1200, ENEMY_SIZE, ENEMY_SIZE, health);
                 if (r%2 == 0) {
                     if (c%2 == 0) {
                         enemy.setImage(ImageStore.enemy_white);

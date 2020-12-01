@@ -15,7 +15,7 @@ public class StarDrop extends GameElement {
     public StarDrop() {
         starsBackground = new ArrayList<>();
 
-        for (int i = 1; i < GameBoard.HEIGHT; i+= 3) {
+        for (int i = 1; i < GameBoard.HEIGHT; i+= 2) {
             Random r = new Random();
             int size = r.nextInt(STAR_SIZE_RANGE);
             starsBackground.add(new Star(r.nextInt(GameBoard.WIDTH-1), i, size, size));

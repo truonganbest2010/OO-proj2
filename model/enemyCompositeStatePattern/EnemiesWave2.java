@@ -14,7 +14,7 @@ public class EnemiesWave2 implements EnemyCompositeState {
     public EnemiesWave2 (EnemyComposite enemyComposite) {
         this.enemyComposite = enemyComposite;
         enemyComposite.enemyFormation(2, NROWS, NCOLS);
-        enemyComposite.getText().add(new TextDraw("Second   Wave", GameBoard.WIDTH/3, -100, Color.LIGHT_GRAY, 30));
+        enemyComposite.getText().add(new TextDraw("Second  Wave", GameBoard.WIDTH*2/5, -300, Color.LIGHT_GRAY, 30));
 
     }
 
