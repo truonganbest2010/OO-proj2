@@ -16,7 +16,6 @@ public class Shooter extends GameElement {
     private ArrayList<GameElement> components = new ArrayList<>();
     private ArrayList<Bullet> weapons = new ArrayList<>();
     private ArrayList<Lightning> lightningGun = new ArrayList<>();
-
     private BottomLine bottomLine;
 
     public Shooter(int x, int y) {
