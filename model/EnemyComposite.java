@@ -55,7 +55,7 @@ public class EnemyComposite extends GameElement implements Subject {
             var oneRow = new ArrayList<Enemy>();
             rows.add(oneRow);
             for (int c = 0; c < NCOLS; c++) {
-                Enemy enemy = new Enemy(c * ENEMY_SIZE * 2, r * ENEMY_SIZE * 2 +20, ENEMY_SIZE, ENEMY_SIZE, health);
+                Enemy enemy = new Enemy(c * ENEMY_SIZE * 2, r * ENEMY_SIZE * 2 -500, ENEMY_SIZE, ENEMY_SIZE, health);
                 if (r%2 == 0) {
                     if (c%2 == 0) {
                         enemy.setImage(ImageStore.enemy_white);
@@ -112,36 +112,46 @@ public class EnemyComposite extends GameElement implements Subject {
     @Override
     public void animate() {
         int dx = UNIT_MOVE;
-        if (movingToRight) {
-            if (rightEnd() >= GameBoard.WIDTH) {
-                dx -= dx;
-                movingToRight = false;
-                // move down dy unit when hitting rightEnd
-                moveDown();
+
+        if (state != null) {
+            if (rows.get(0).get(0).y > 0) {
+                    
+                    if (movingToRight) {
+                        if (rightEnd() >= GameBoard.WIDTH) {
+                            dx -= dx;
+                            movingToRight = false;
+                            // move down dy unit when hitting rightEnd
+                            moveDown();
+                        }
+                    } else {
+                        dx = -dx;
+                        if (leftEnd() <= 0) {
+                            dx = -dx;
+                            movingToRight = true;
+                            // move down dy unit when hitting leftEnd
+                            moveDown();
+                        }
+                    }      
             }
-        } else {
-            dx = -dx;
-            if (leftEnd() <= 0) {
-                dx = -dx;
-                movingToRight = true;
-                // move down dy unit when hitting leftEnd
+            else {
                 moveDown();
             }
         }
         // update enemy x loc
-        for (var row : rows) {
-            for (var e : row) {
-                e.x += dx;
-            }
-        }
+            for (var row : rows) {
+                for (var e : row) {
+                    e.x += dx;
+                }
+            }    
         // animate bombs
-        for (var b : bombs) {
-            b.animate();
-        }
+            for (var b : bombs) {
+                b.animate();
+            }
+
         // animate text
-        for (var t: text) {
-            t.animate();
-        }
+            for (var t: text) {
+                t.animate();
+            }
 
     }
 
