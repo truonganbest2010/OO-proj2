@@ -50,23 +50,23 @@ public class TimerListener implements ActionListener {
     
         } else {
             update();
-            gameBoard.getEnemyComposite().removeTextOutOfBound();
             gameBoard.getStartBtn().setText("New Game");
             gameBoard.getPauseBtn().setEnabled(false);
             gameBoard.getStartBtn().setEnabled(true);
-            // gameBoard.getTimer().stop();
             bomb_frameCounter = 0;
             bonus_frameCounter = 0;
             if (gameBoard.getEnemyComposite().getText().size() < 1) {
                 gameBoard.getEnemyComposite().getText().add(new TextDraw("Click <New Game> to Start", GameBoard.WIDTH/4 - 50, 0, Color.white, 30));
             }
+            // gameBoard.getTimer().stop();
         }
 
         if (star_frameCounter == STAR_FALL_FREQ) {
             gameBoard.getStarDrop().dropStars();
             star_frameCounter = 0;
         }
-        gameBoard.getStarDrop().removeStarsOutOfBound();
+        
+        removeObjectOutOfBound();
         gameBoard.getCanvas().repaint();
     }
 
@@ -121,12 +121,16 @@ public class TimerListener implements ActionListener {
         var enemyComposite = gameBoard.getEnemyComposite();
         var bonusDropper = gameBoard.getBonusDropper();
 
-        shooter.removeOutOfUpperBound();
-        enemyComposite.removeOutOfLowerBound();
-        bonusDropper.removeBonusOutOfLowerBound();
-
         enemyComposite.processCollisionWithEnemy(shooter);
         bonusDropper.processCollisionWithBonus(shooter);
+    }
+
+
+    private void removeObjectOutOfBound() {
+        gameBoard.getShooter().removeOutOfUpperBound();
+        gameBoard.getEnemyComposite().removeOutOfLowerBound();
+        gameBoard.getBonusDropper().removeBonusOutOfLowerBound();
+        gameBoard.getStarDrop().removeStarsOutOfBound();
     }
 
 

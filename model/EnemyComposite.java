@@ -17,8 +17,6 @@ import view.GameBoard;
 
 public class EnemyComposite extends GameElement implements Subject {
 
-    public static final int NROWS = 3;
-    public static final int NCOLS = 12;
     public static final int ENEMY_SIZE = 25;
     public static final int UNIT_MOVE = 2;
 
@@ -49,12 +47,12 @@ public class EnemyComposite extends GameElement implements Subject {
         state = new EnemiesWave1(this);
     }
 
-    public void enemyFormation(int health) {
+    public void enemyFormation(int health, int nrows, int ncols) {
         /** Enemies Formation */
-        for (int r = 0; r < NROWS; r++) {
+        for (int r = 0; r < nrows; r++) {
             var oneRow = new ArrayList<Enemy>();
             rows.add(oneRow);
-            for (int c = 0; c < NCOLS; c++) {
+            for (int c = 0; c < ncols; c++) {
                 Enemy enemy = new Enemy(c * ENEMY_SIZE * 2, r * ENEMY_SIZE * 2 -500, ENEMY_SIZE, ENEMY_SIZE, health);
                 if (r%2 == 0) {
                     if (c%2 == 0) {
@@ -207,17 +205,16 @@ public class EnemyComposite extends GameElement implements Subject {
             }
         }
         bombs.removeAll(remove);
-        
-    }
 
-    public void removeTextOutOfBound() {
-        var remove = new ArrayList<GameElement>();
+        remove = new ArrayList<GameElement>();
         for (var t : text) {
             if (t.y >= GameBoard.HEIGHT+100) {
                 remove.add(t);
             }
         }
         text.removeAll(remove);
+
+
     }
 
 
@@ -256,7 +253,7 @@ public class EnemyComposite extends GameElement implements Subject {
                 }
 
                 // check if enemies reach bottom line
-                if (enemy.collideWith(shooter.getBottomLine().get(0))) {
+                if (enemy.collideWith(shooter.getBottomLine())) {
                     notifyObservers(EVENT.REACH_BOTTOM);
                 }
             }

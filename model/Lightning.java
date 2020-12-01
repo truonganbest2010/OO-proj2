@@ -7,7 +7,7 @@ import view.GameBoard;
 
 public class Lightning extends GameElement {
 
-    public static final int WIDTH = 10;
+    public static final int WIDTH = EnemyComposite.ENEMY_SIZE;
     public static final int UNIT_MOVE = 1;
 
     public Lightning(int x, int y) {
@@ -18,13 +18,7 @@ public class Lightning extends GameElement {
 
     @Override
     public void render(Graphics2D g2) {
-        // g2.setColor(color);
-        // if (filled) {
-        //     g2.fillRect(x, y, width, height);
-        // }
-        // else {
-        //     g2.drawRect(x, y, width, height);
-        // }
+        
         g2.drawImage(getImage(), null, x, y);
         
     }

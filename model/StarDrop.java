@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Random;
@@ -18,6 +19,7 @@ public class StarDrop extends GameElement {
         for (int i = 1; i < GameBoard.HEIGHT; i+= 2) {
             Random r = new Random();
             int size = r.nextInt(STAR_SIZE_RANGE);
+
             starsBackground.add(new Star(r.nextInt(GameBoard.WIDTH-1), i, size, size));
         }
     }
@@ -45,6 +47,7 @@ public class StarDrop extends GameElement {
     public void dropStars() {
         Random x = new Random();
         int size = x.nextInt(STAR_SIZE_RANGE);
+   
         starsBackground.add(new Star(x.nextInt(GameBoard.WIDTH-1), 0, size, size));
     }
 

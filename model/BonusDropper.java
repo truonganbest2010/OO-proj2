@@ -5,9 +5,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import model.bonusStrategyPattern.BonusAfterHitShooterStrategy;
-import model.bonusStrategyPattern.BonusBulletRenderAfterHitShooterStrategy;
 import model.bonusStrategyPattern.BonusFallForwardStrategy;
-import model.bonusStrategyPattern.BonusLightningRenderAfterHitShooterStrategy;
+import model.bonusStrategyPattern.BonusRenderAfterHitShooterStrategy;
 import model.bonusStrategyPattern.BonusMoveStrategy;
 import model.bonusStrategyPattern.BonusRenderFallForwardStrategy;
 import model.bonusStrategyPattern.BonusRenderStrategy;
@@ -97,21 +96,20 @@ public class BonusDropper extends GameElement {
                     if (bn instanceof BonusLightning) {
                         // System.out.println(removeBonus.size());
                         shooter.setlightningShoot(shooter.getLightningShoot() + BONUS_LIGHTNING);
-                        setRenderStrategy(new BonusLightningRenderAfterHitShooterStrategy(this));
-                        setMoveStrategy(new BonusAfterHitShooterStrategy(this));
+                        
                     }
 
                     else if (bn instanceof BonusBullet) {
                         // System.out.println(removeBonus.size());
                         shooter.setBulletShoot(shooter.getBulletShoot() + BONUS_BULLET);
-                        setRenderStrategy(new BonusBulletRenderAfterHitShooterStrategy(this));
-                        setMoveStrategy(new BonusAfterHitShooterStrategy(this));
+                        
                     }
-                    
+
+                    setMoveStrategy(new BonusAfterHitShooterStrategy(this));
+                    setRenderStrategy(new BonusRenderAfterHitShooterStrategy(this));  
                 }
             
             }
-            // removeBonus.clear();
         }
 
 

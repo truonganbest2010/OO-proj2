@@ -27,7 +27,7 @@ public class EnemyCompositeObserver implements Observer {
         // TODO Auto-generated method stub
         gameBoard.setGameOver(true);
         // gameBoard.getCanvas().getGameElements().clear();
-        gameBoard.getCanvas().getGameElements().add(new GameOverDraw(0, 0, gameBoard.getCanvas().getWidth(), gameBoard.getCanvas().getHeight(), new Color(255, 51, 51, 96)));
+        gameBoard.getCanvas().getGameElements().add(new GameOverDraw(0, 0, gameBoard.getCanvas().getWidth(), gameBoard.getCanvas().getHeight(), new Color(255, 51, 51, 20)));
         gameBoard.getEnemyComposite().getText().add(new TextDraw("YOU LOST!", gameBoard.getCanvas().getWidth()/2 - 120, -200, Color.RED, 50)); // gameBoard.getCanvas().getHeight()/2 - 70
         showScore();
     }

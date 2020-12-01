@@ -16,7 +16,8 @@ public class Shooter extends GameElement {
     private ArrayList<GameElement> components = new ArrayList<>();
     private ArrayList<Bullet> weapons = new ArrayList<>();
     private ArrayList<Lightning> lightningGun = new ArrayList<>();
-    private ArrayList<GameElement> bottomLine = new ArrayList<>();
+
+    private BottomLine bottomLine;
 
     public Shooter(int x, int y) {
         super(x, y, 0, 0);
@@ -35,7 +36,7 @@ public class Shooter extends GameElement {
         components.add(s3);
         components.add(s4);
 
-        bottomLine.add(new BottomLine(0, GameBoard.HEIGHT-EnemyComposite.ENEMY_SIZE/2, GameBoard.WIDTH, EnemyComposite.ENEMY_SIZE/2));
+        bottomLine = new BottomLine(0, GameBoard.HEIGHT-EnemyComposite.ENEMY_SIZE/2, GameBoard.WIDTH, EnemyComposite.ENEMY_SIZE/2);
     }
 
     public void moveLeft() {
@@ -96,7 +97,7 @@ public class Shooter extends GameElement {
     public ArrayList<GameElement> getComponents() {
         return components;
     }
-    public ArrayList<GameElement> getBottomLine() {
+    public BottomLine getBottomLine() {
         return bottomLine;
     }
 
