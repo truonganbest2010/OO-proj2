@@ -54,7 +54,7 @@ public class EnemyCompositeObserver implements Observer {
 
     private void showScore() {
         gameBoard.getEnemyComposite().getText().add(new TextDraw("Your Score:", gameBoard.getCanvas().getWidth()/2 - 100, -130, Color.WHITE, 30));
-        gameBoard.getEnemyComposite().getText().add(new TextDraw(""+gameBoard.getScore(), gameBoard.getCanvas().getWidth()/2 - 50,  -80, Color.WHITE, 50)); // gameBoard.getCanvas().getHeight()/2 - 70
+        gameBoard.getEnemyComposite().getText().add(new TextDraw(""+gameBoard.getScore(), gameBoard.getCanvas().getWidth()/2 - 50,  -70, Color.WHITE, 50)); // gameBoard.getCanvas().getHeight()/2 - 70
     }
     
 }
