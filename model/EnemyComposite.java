@@ -10,8 +10,8 @@ import model.bombStrategyPattern.BombHitShooterStrategy;
 import model.bombStrategyPattern.BombRenderHitShooterStrategy;
 import model.bulletStrategyPattern.BulletHitEnemyStrategy;
 import model.bulletStrategyPattern.BulletRenderHitEnemyStrategy;
-import model.gameStatePattern.GameState;
-import model.gameStatePattern.GameWave1;
+import model.enemyCompositeStatePattern.EnemiesWave1;
+import model.enemyCompositeStatePattern.EnemyCompositeState;
 import model.images.ImageStore;
 import view.GameBoard;
 
@@ -39,14 +39,14 @@ public class EnemyComposite extends GameElement implements Subject {
     private Random random = new Random();
 
     private int enemiesKilled = 0;
-    private GameState state;
+    private EnemyCompositeState state;
 
     public EnemyComposite() {
         rows = new ArrayList<>();
         bombs = new ArrayList<>();
         text = new ArrayList<>();
 
-        state = new GameWave1(this);
+        state = new EnemiesWave1(this);
     }
 
     public void enemyFormation(int health) {
@@ -70,10 +70,10 @@ public class EnemyComposite extends GameElement implements Subject {
         }
     }
 
-    public void goNextState() {
-        state.nextState(this);
+    public void toNextWave() {
+        state.nextWave(this);
     }
-    public void setState(GameState state) {
+    public void setState(EnemyCompositeState state) {
         this.state = state;
     }
 
@@ -262,7 +262,7 @@ public class EnemyComposite extends GameElement implements Subject {
         // System.out.println(rows.size());
         if (rows.size() == 0) {  
             if (state != null) {
-                goNextState();
+                toNextWave();
             } else notifyObservers(EVENT.GOT_ALL_DESTROYED);
         }
 
