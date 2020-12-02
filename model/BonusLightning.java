@@ -4,8 +4,6 @@ import java.awt.Graphics2D;
 
 import model.images.ImageStore;
 
-import java.awt.*;
-
 public class BonusLightning extends GameElement {
 
     public static final int WIDTH = 25;

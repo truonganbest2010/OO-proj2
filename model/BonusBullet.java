@@ -16,14 +16,14 @@ public class BonusBullet extends GameElement {
 
     @Override
     public void render(Graphics2D g2) {
-        // TODO Auto-generated method stub
+        
         if (y%2 == 0)
             g2.drawImage(ImageStore.bonus_bullet, null, x, y);
     }
 
     @Override
     public void animate() {
-        // TODO Auto-generated method stub
+        // bonus dropper
 
     }
     
