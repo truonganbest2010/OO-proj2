@@ -95,14 +95,11 @@ public class BonusDropper extends GameElement {
                     
                     if (bn instanceof BonusLightning) {
                         // System.out.println(removeBonus.size());
-                        shooter.setlightningShoot(shooter.getLightningShoot() + BONUS_LIGHTNING);
-                        
+                        shooter.setlightningShoot(shooter.getLightningShoot() + BONUS_LIGHTNING);     
                     }
-
                     else if (bn instanceof BonusBullet) {
                         // System.out.println(removeBonus.size());
-                        shooter.setBulletShoot(shooter.getBulletShoot() + BONUS_BULLET);
-                        
+                        shooter.setBulletShoot(shooter.getBulletShoot() + BONUS_BULLET);             
                     }
 
                     setMoveStrategy(new BonusAfterHitShooterStrategy(this));
