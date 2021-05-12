@@ -53,15 +53,17 @@ public class EnemyComposite extends GameElement implements Subject {
             var oneRow = new ArrayList<Enemy>();
             rows.add(oneRow);
             for (int c = 0; c < ncols; c++) {
-                Enemy enemy = new Enemy(c * ENEMY_SIZE * 2, r * ENEMY_SIZE * 2 -1200, ENEMY_SIZE, ENEMY_SIZE, health);
-                if (r%2 == 0) {
-                    if (c%2 == 0) {
+                Enemy enemy = new Enemy(c * ENEMY_SIZE * 2, r * ENEMY_SIZE * 2 - 1200, ENEMY_SIZE, ENEMY_SIZE, health);
+                if (r % 2 == 0) {
+                    if (c % 2 == 0) {
                         enemy.setImage(ImageStore.enemy_white);
-                    } else enemy.setImage(ImageStore.enemy_yellow);
+                    } else
+                        enemy.setImage(ImageStore.enemy_yellow);
                 } else {
-                    if (c%2 != 0) {
+                    if (c % 2 != 0) {
                         enemy.setImage(ImageStore.enemy_white);
-                    } else enemy.setImage(ImageStore.enemy_yellow);
+                    } else
+                        enemy.setImage(ImageStore.enemy_yellow);
                 }
                 oneRow.add(enemy);
             }
@@ -71,6 +73,7 @@ public class EnemyComposite extends GameElement implements Subject {
     public void toNextWave() {
         state.nextWave(this);
     }
+
     public void setState(EnemyCompositeState state) {
         this.state = state;
     }
@@ -78,7 +81,6 @@ public class EnemyComposite extends GameElement implements Subject {
     public ArrayList<GameElement> getText() {
         return text;
     }
-
 
     @Override
     public void render(Graphics2D g2) {
@@ -96,10 +98,9 @@ public class EnemyComposite extends GameElement implements Subject {
         }
 
         // render Text
-        for (var t: text) {
+        for (var t : text) {
             t.render(g2);
         }
-
 
         g2.setColor(Color.white);
         g2.setFont(new Font("Courier", Font.BOLD, 10));
@@ -113,46 +114,44 @@ public class EnemyComposite extends GameElement implements Subject {
 
         if (state != null) {
             if (rows.get(0).get(0).y > 0) {
-                    
-                    if (movingToRight) {
-                        if (rightEnd() >= GameBoard.WIDTH) {
-                            dx -= dx;
-                            movingToRight = false;
-                            // move down dy unit when hitting rightEnd
-                            moveDown();
-                        }
-                    } else {
+
+                if (movingToRight) {
+                    if (rightEnd() >= GameBoard.WIDTH) {
+                        dx -= dx;
+                        movingToRight = false;
+                        // move down dy unit when hitting rightEnd
+                        moveDown();
+                    }
+                } else {
+                    dx = -dx;
+                    if (leftEnd() <= 0) {
                         dx = -dx;
-                        if (leftEnd() <= 0) {
-                            dx = -dx;
-                            movingToRight = true;
-                            // move down dy unit when hitting leftEnd
-                            moveDown();
-                        }
-                    }      
-            }
-            else {
+                        movingToRight = true;
+                        // move down dy unit when hitting leftEnd
+                        moveDown();
+                    }
+                }
+            } else {
                 moveDown();
             }
         }
         // update enemy x loc
-            for (var row : rows) {
-                for (var e : row) {
-                    e.x += dx;
-                }
-            }    
-        // animate bombs
-            for (var b : bombs) {
-                b.animate();
+        for (var row : rows) {
+            for (var e : row) {
+                e.x += dx;
             }
+        }
+        // animate bombs
+        for (var b : bombs) {
+            b.animate();
+        }
 
         // animate text
-            for (var t: text) {
-                t.animate();
-            }
+        for (var t : text) {
+            t.animate();
+        }
 
     }
-
 
     private int rightEnd() {
         int xEnd = -100;
@@ -168,7 +167,7 @@ public class EnemyComposite extends GameElement implements Subject {
 
     private int leftEnd() {
         int xEnd = 9000;
-        for (var row: rows) {
+        for (var row : rows) {
             if (row.size() == 0)
                 continue;
             int x = row.get(0).x;
@@ -180,8 +179,8 @@ public class EnemyComposite extends GameElement implements Subject {
 
     private void moveDown() {
         int dy = UNIT_MOVE_DOWN;
-        for (var row: rows) {
-            for (var e: row) {
+        for (var row : rows) {
+            for (var e : row) {
                 e.y += dy;
             }
         }
@@ -208,34 +207,31 @@ public class EnemyComposite extends GameElement implements Subject {
 
         remove = new ArrayList<GameElement>();
         for (var t : text) {
-            if (t.y >= GameBoard.HEIGHT+100) {
+            if (t.y >= GameBoard.HEIGHT + 100) {
                 remove.add(t);
             }
         }
         text.removeAll(remove);
 
-
     }
-
 
     public void processCollisionWithEnemy(Shooter shooter) {
         // bullet vs enemies
         var removeRow = new ArrayList<>();
         var removeBullet = new ArrayList<>();
-        for (var row: rows) {
+        for (var row : rows) {
             var removeEnemies = new ArrayList<GameElement>();
-            for (var enemy: row) {
-                for (var bullet: shooter.getWeapons()) {
+            for (var enemy : row) {
+                for (var bullet : shooter.getWeapons()) {
                     if (enemy.collideWith(bullet) && removeEnemies.size() < 1) {
                         if (enemy.getHealth() > 1) {
-                            enemy.setHealth(enemy.getHealth()-1);
+                            enemy.setHealth(enemy.getHealth() - 1);
                             removeBullet.add(bullet);
-                        }
-                        else {
+                        } else {
                             removeEnemies.add(enemy);
                             enemiesKilled++;
                             notifyObservers(EVENT.GOT_SHOT);
-                            /** Enemy explodes */ 
+                            /** Enemy explodes */
                             BulletHitEnemyStrategy bhes = new BulletHitEnemyStrategy(bullet);
                             bhes.setMoveRight(movingToRight);
                             bullet.setMoveStrategy(bhes);
@@ -244,10 +240,10 @@ public class EnemyComposite extends GameElement implements Subject {
                     }
                 }
 
-                for (var laser: shooter.getLightningGun()) {
+                for (var laser : shooter.getLightningGun()) {
                     if (enemy.collideWith(laser)) {
                         removeEnemies.add(enemy);
-                        enemiesKilled+= removeEnemies.size();
+                        enemiesKilled += removeEnemies.size();
                         notifyObservers(EVENT.GOT_SHOT);
                     }
                 }
@@ -267,10 +263,11 @@ public class EnemyComposite extends GameElement implements Subject {
         rows.removeAll(removeRow);
 
         // System.out.println(rows.size());
-        if (rows.size() == 0) {  
+        if (rows.size() == 0) {
             if (state != null) {
                 toNextWave();
-            } else notifyObservers(EVENT.GOT_ALL_DESTROYED);
+            } else
+                notifyObservers(EVENT.GOT_ALL_DESTROYED);
         }
 
         // bullet vs bombs
@@ -295,7 +292,7 @@ public class EnemyComposite extends GameElement implements Subject {
             for (var b : bombs) {
                 if (component.collideWith(b) && removeComponents.size() < 1) {
                     removeComponents.add(component);
-                    shooter.setBulletShoot(shooter.getBulletShoot()-1);
+                    shooter.setBulletShoot(shooter.getBulletShoot() - 1);
                     b.setMoveStrategy(new BombHitShooterStrategy(b));
                     b.setRenderStrategy(new BombRenderHitShooterStrategy(b));
                 }
@@ -324,43 +321,38 @@ public class EnemyComposite extends GameElement implements Subject {
 
     @Override
     public void addEnemyListener(Observer o) {
-        // TODO Auto-generated method stub
         observers.add(o);
     }
 
     @Override
     public void removeEnemyListener(Observer o) {
-        // TODO Auto-generated method stub
         observers.remove(o);
     }
 
     @Override
     public void notifyObservers(EVENT event) {
-        // TODO Auto-generated method stub
         switch (event) {
             case GOT_SHOT:
-                for (var o: observers) {
+                for (var o : observers) {
                     o.enemiesGotShot();
                 }
                 break;
             case REACH_BOTTOM:
-                for (var o: observers) {
+                for (var o : observers) {
                     o.enemiesReachBottom();
                 }
                 break;
             case GOT_ALL_DESTROYED:
-                for (var o: observers) {
+                for (var o : observers) {
                     o.enemiesAllGone();
                 }
                 break;
             case DESTROYED_SHOOTER:
-                for (var o: observers) {
+                for (var o : observers) {
                     o.enemiesDestroyedShooter();
                 }
         }
 
-
     }
 
-    
 }

@@ -42,14 +42,12 @@ public class TimerListener implements ActionListener {
         ++bomb_frameCounter;
         ++bonus_frameCounter;
         ++star_frameCounter;
+        update();
         
         if (!gameBoard.isGameOver()) {
-            update();
             processEventQueue();
             processCollision();
-    
         } else {
-            update();
             gameBoard.getStartBtn().setText("New Game");
             gameBoard.getPauseBtn().setEnabled(false);
             gameBoard.getStartBtn().setEnabled(true);
@@ -58,7 +56,6 @@ public class TimerListener implements ActionListener {
             if (gameBoard.getEnemyComposite().getText().size() < 1) {
                 gameBoard.getEnemyComposite().getText().add(new TextDraw("Click <New Game> to Start", GameBoard.WIDTH/3 -50, 0, Color.white, 30));
             }
-            // gameBoard.getTimer().stop();
         }
 
         starDrop();
